@@ -11,7 +11,7 @@ public class DataManager extends DummyData {
         // Adds the dummy data to the list
         String[][] data = DummyData.getDummyProduct();
         for (String[] datum : data) {
-            productList.add(new Products(datum[0], datum[1], datum[2], Double.parseDouble(datum[3]), Double.parseDouble(datum[4]), Integer.parseInt(datum[5]) , Integer.parseInt(datum[6])));
+            productList.add(new Products(datum));
         }
     }
 

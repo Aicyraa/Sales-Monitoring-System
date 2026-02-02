@@ -67,9 +67,7 @@ public class DummyData {
             {"20", "Index Cards", "4", "30.00", "0", "Regular", "2026-01-05T15:00:00"},
     };
 
-    public static String[][] getDummyProduct() {
-        return dummyProduct;
-    }
+    public static String[][] getDummyProduct() { return dummyProduct; }
     public static String[][] getDummySales() { return dummySales; }
 
 }
