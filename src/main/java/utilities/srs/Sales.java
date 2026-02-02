@@ -48,17 +48,17 @@ public class Sales {
     }
 
     // Getters
-    public UUID getSaleID() { return saleID; }
-    public int getProductId() { return productId; }
-    public String getProductName() { return productName; }
-    public int getQuantitySold() { return quantitySold; }
-    public Double getUnitPrice() { return unitPrice; }
-    public Double getDiscountPercentage() { return discountPercentage; }
-    public Double getDiscountAmount() { return discountAmount; }
-    public Double getTotalAmount() { return totalAmount; }
-    public LocalDateTime getDateTime() { return dateTime; }
-    public LocalDate getDate() { return dateTime.toLocalDate(); }
-    public String getSeasonTag() { return seasonTag; }
+    public UUID getSaleID() {return saleID;}
+    public int getProductId() {return productId;}
+    public String getProductName() {return productName;}
+    public int getQuantitySold() {return quantitySold;}
+    public Double getUnitPrice() {return unitPrice;}
+    public Double getDiscountPercentage() {return discountPercentage;}
+    public Double getDiscountAmount() {return discountAmount;}
+    public Double getTotalAmount() {return totalAmount;}
+    public LocalDateTime getDateTime() {return dateTime;}
+    public LocalDate getDate() {return dateTime.toLocalDate();}
+    public String getSeasonTag() {return seasonTag;}
 
     // Business methods
     public Double getRevenue() {

@@ -6,15 +6,15 @@ import java.util.ArrayList;
 public class Products {
     static int idCount = 1;
 
-    int id;
-    String name;
-    String category;
-    String supplier;
-    Double price;             // Price of each stock
-    Double cost;              // Cost per stock
-    int stock;                // total stock
-    int currentStock;         // Current Stock
-    int reOrderStock;         // Stock level where the owner should restock
+    private int id;
+    private String name;
+    private String category;
+    private String supplier;
+    private Double price;             // Price of each stock
+    private Double cost;              // Cost per stock
+    private int stock;                // total stock
+    private int currentStock;         // Current Stock
+    private int reOrderStock;         // Stock level where the owner should restock
 
     public Products(String name, String category, String supplier, Double price, Double cost, int stock, int reOrderStock) {
         this.id = idCount++;
@@ -28,55 +28,33 @@ public class Products {
         this.reOrderStock = reOrderStock;
     }
 
-    // getters
-    public String getName() {
-        return this.name;
+    public Products (String[] data) {
+        this.id = idCount++;
+        this.name = data[0];
+        this.category = data[1];
+        this.supplier = data[2];
+        this.price = Double.parseDouble(data[3]);
+        this.cost = Double.parseDouble(data[4]);
+        this.stock = Integer.parseInt(data[5]);
+        this.currentStock = this.stock;
+        this.reOrderStock = Integer.parseInt(data[6]);
     }
 
-    public String getCategory() {
-        return this.category;
-    }
-
-    public String getSupplier() {
-        return this.supplier;
-    }
-
-    public Double getPrice() {
-        return this.price;
-    }
-
-    public Double getCost() {
-        return this.cost;
-    }
-
-    public Double getInventoryValue() {
-        return this.price * this.stock;
-    }
-
-    public int getStock() {
-        return this.stock;
-    }
-
-    public int getCurrentStock() {
-        return this.currentStock;
-    }
-
-    public int getReOrderStock() {
-        return this.reOrderStock;
-    }
+    // getters for gui
+    public String getName() {return this.name;}
+    public String getCategory() {return this.category;}
+    public String getSupplier() {return this.supplier;}
+    public Double getPrice() {return this.price;}
+    public Double getCost() {return this.cost;}
+    public Double getInventoryValue() {return this.price * this.stock;}
+    public int getStock() {return this.stock;}
+    public int getCurrentStock() {return this.currentStock;}
+    public int getReOrderStock() {return this.reOrderStock;}
 
     // setters
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    public void setStock(int stock) {this.stock = stock;}
+    public void setCost(Double cost) {this.cost = cost;}
+    public void setPrice(Double price) {this.price = price;}
 
     // business method
     public String getStockStatus() {
