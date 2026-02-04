@@ -1,4 +1,4 @@
-package utilities.srs;
+package utilities.sms;
 
 public class DummyData {
 

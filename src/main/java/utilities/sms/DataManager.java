@@ -1,7 +1,9 @@
-package utilities.srs;
+package utilities.sms;
+
+import models.sms.Products;
+import models.sms.Sales;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DataManager extends DummyData {
     static ArrayList<Products> productList = new ArrayList<>();

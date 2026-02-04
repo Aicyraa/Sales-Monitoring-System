@@ -1,4 +1,4 @@
-package utilities.srs;
+package models.sms;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.UUID;

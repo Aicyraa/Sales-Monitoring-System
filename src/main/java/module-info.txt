@@ -1,5 +1,5 @@
-// module for the javaFX
-// ginawang kong txt muna para maka-run ng code sa terminal
+// I u-update ito once na mag ggui na
+
 
 module SMS {
     requires javafx.controls;
@@ -10,9 +10,9 @@ module SMS {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    exports runner.srs;
-    exports utilities.srs;
+    exports runner.sms;
+    exports utilities.sms;
 
-    opens runner.srs to javafx.fxml;
-    opens utilities.srs to javafx.fxml;
+    opens runner.sms to javafx.fxml;
+    opens utilities.sms to javafx.fxml;
 }
