@@ -31,34 +31,44 @@ public class DataManager extends DummyData {
         generateProducts();
         generateSales();
 
-        System.out.println("===== PRODUCTS LOADED =====");
-        System.out.println("Total Products: " + productList.size());
-        System.out.println();
+        // Pag deduct ng stock manually
+        productList.get(0).deductStock(10);
+        productList.get(2).deductStock(15);
+        productList.get(5).deductStock(7);
+        productList.get(7).deductStock(20);
+        productList.get(18).deductStock(25);
+        productList.get(11).deductStock(23);
+        productList.get(18).deductStock(16);
 
-        // Display first 5 products
-        System.out.println("===== SAMPLE PRODUCTS =====");
+        // Products
+        System.out.println("\n===== SAMPLE PRODUCTS =====");
         for (int i = 0; i < Math.min(5, productList.size()); i++) {
             Products p = productList.get(i);
-            System.out.print(p);
-            System.out.println(p.getStockStatus());
+            System.out.println(p);
+            System.out.println("Stock Status: " + p.getStockStatus());
         }
 
-        System.out.println("\n===== SALES LOADED =====");
-        System.out.println("Total Sales: " + saleList.size());
-        System.out.println();
-
-        // Display all sales
-        System.out.println("===== ALL SALES =====");
+        // Sales
+        System.out.println("\n===== ALL SALES =====");
         for (int i = 0; i < Math.min(5, saleList.size()); i++) {
             Sales s = saleList.get(i);
             System.out.println(s);
         }
 
         // By category
-        System.out.println("\nCategorize Products");
-        ArrayList<Products> categorizedProducts = ProductServices.getProductCategory(productList, "utilities");
+        System.out.println("\n===== CATEGORIZE PRODUCTS =====");
+        ArrayList<Products> categorizedProducts = ProductServices.getCategory(productList, "utilities");
         for (int i = 0; i < categorizedProducts.size(); i++) {
             Products p = categorizedProducts.get(i);
+            System.out.println(p);
+        }
+
+        // least-selling to best-selling
+
+        System.out.println("\n==== BEST SELLING TO LEAST SELLING =====");
+        ArrayList<Products> sortedProducts = ProductServices.getBestSelling(productList);
+        for (int i = 0; i < Math.min(5, sortedProducts.size()); i++) {
+            Products p = sortedProducts.get(i);
             System.out.println(p);
         }
 
