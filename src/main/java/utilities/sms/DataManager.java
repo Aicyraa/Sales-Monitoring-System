@@ -2,6 +2,7 @@ package utilities.sms;
 
 import models.sms.Products;
 import models.sms.Sales;
+import services.sms.ProductServices;
 
 import java.util.ArrayList;
 
@@ -48,21 +49,18 @@ public class DataManager extends DummyData {
 
         // Display all sales
         System.out.println("===== ALL SALES =====");
-        for (Sales s : saleList) {
+        for (int i = 0; i < Math.min(5, saleList.size()); i++) {
+            Sales s = saleList.get(i);
             System.out.println(s);
         }
 
-        // Computation for the sales and products
-        // Revenue
-
-        System.out.println("\n===== REVENUE SUMMARY =====");
-        double totalRevenue = 0;
-        for (Sales s : saleList) {
-            totalRevenue += s.getTotalAmount();
+        // By category
+        System.out.println("\nCategorize Products");
+        ArrayList<Products> categorizedProducts = ProductServices.getProductCategory(productList, "utilities");
+        for (int i = 0; i < categorizedProducts.size(); i++) {
+            Products p = categorizedProducts.get(i);
+            System.out.println(p);
         }
-
-        System.out.println("Total Revenue from all sales: ₱" + String.format("%.2f", totalRevenue));
-
 
     }
 
