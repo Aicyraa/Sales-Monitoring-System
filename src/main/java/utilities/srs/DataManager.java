@@ -23,6 +23,7 @@ public class DataManager extends DummyData {
     }
 
     public static void main(String[] args) {
+
         // Generate products and sales
         generateProducts();
         generateSales();
@@ -49,13 +50,18 @@ public class DataManager extends DummyData {
             System.out.println(s);
         }
 
-        // Calculate and display total revenue
+        // Computation for the sales and products
+        // Revenue
+
         System.out.println("\n===== REVENUE SUMMARY =====");
         double totalRevenue = 0;
         for (Sales s : saleList) {
             totalRevenue += s.getTotalAmount();
         }
+
         System.out.println("Total Revenue from all sales: ₱" + String.format("%.2f", totalRevenue));
+
+
     }
 
 }

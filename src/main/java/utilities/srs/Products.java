@@ -95,6 +95,4 @@ public class Products {
         return "Product: " + this.name + " | Category: " +  this.category + " | Supplier: " + this.supplier + " | Price: " + this.price + " | Current Stock: " +  this.currentStock + " | Stock:" +  this.stock + " | " +  this.reOrderStock + " | Stock Status: ";
     }
 
-    ;
-
 }
