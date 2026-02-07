@@ -13,18 +13,6 @@ public class Products {
     private int currentStock;         // Current Stock
     private int reOrderStock;         // Stock level where the owner should restock
 
-    public Products(String name, String category, String supplier, Double price, Double cost, int stock, int reOrderStock) {
-        this.id = idCount++;
-        this.name = name;
-        this.category = category;
-        this.supplier = supplier;
-        this.price = price;
-        this.cost = cost;
-        this.stock = stock;
-        this.currentStock = stock;
-        this.reOrderStock = reOrderStock;
-    }
-
     public Products (String[] data) {
         this.id = idCount++;
         this.name = data[0];
@@ -55,29 +43,25 @@ public class Products {
 
     // business method
     public String getStockStatus() {
-        if (this.currentStock > this.reOrderStock) {
-            return "Healthy";
-        } else if (this.currentStock < reOrderStock && this.stock > 0) {
-            return "Low";
-        } else {
-            return "Out of stock";
-        }
+        if (this.currentStock > this.reOrderStock) { return "Healthy"; }
+        else if (this.currentStock < reOrderStock && this.stock > 0) { return "Low"; }
+        else { return "Out of stock"; }
     }
 
     public void deductStock(int stock) {
-        if (!(stock > this.currentStock)) {this.currentStock -= stock;};
+        if (!(stock > this.currentStock)) {this.currentStock -= stock;}
     }
 
     public void addStock(int stock) {
         this.currentStock += stock;
     }
 
-    public int getQtySoldAmount() {
+    public int getQtySold() {
         return this.stock - this.currentStock;
     }
 
-    public Double getQtyTotalSold() {
-        int qty = getQtySoldAmount();
+    public Double getTotalQtySold() {
+        int qty = getQtySold();
         return qty * this.price;
     }
 
@@ -89,7 +73,7 @@ public class Products {
 
     @Override
     public String toString() {
-        return "Product: " + this.name + " | Category: " +  this.category + " | Supplier: " + this.supplier + " | Price: " + this.price + " | Current Stock: " +  this.currentStock + " | Stock:" +  this.stock + " | " +  this.reOrderStock + " | Stock Status: ";
+        return "Product: " + this.name + " | Sold: " + (this.stock - this.currentStock) ;
     }
 
 }
