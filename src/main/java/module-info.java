@@ -1,6 +1,3 @@
-// I u-update ito once na mag ggui na
-
-
 module SMS {
     requires javafx.controls;
     requires javafx.fxml;
@@ -10,9 +7,11 @@ module SMS {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    exports runner.sms;
-    exports utilities.sms;
+    exports runner;
+    exports models;
+    exports controllers;
 
-    opens runner.sms to javafx.fxml;
-    opens utilities.sms to javafx.fxml;
+    opens runner to javafx.fxml;
+    opens models to javafx.fxml;
+    opens controllers to javafx.fxml;
 }

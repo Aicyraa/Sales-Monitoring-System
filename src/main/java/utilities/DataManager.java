@@ -1,9 +1,9 @@
-package utilities.sms;
+package utilities;
 
-import models.sms.Products;
-import models.sms.Sales;
-import services.sms.ProductServices;
-import services.sms.SaleServices;
+import models.Products;
+import models.Sales;
+import controllers.ProductServices;
+import controllers.SaleServices;
 
 import java.time.LocalDate;
 import java.time.Month;

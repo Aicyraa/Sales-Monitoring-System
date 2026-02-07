@@ -1,4 +1,4 @@
-package models.sms;
+package models;
 
 public class Products {
     static int idCount = 1;

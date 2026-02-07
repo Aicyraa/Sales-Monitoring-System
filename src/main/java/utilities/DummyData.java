@@ -1,9 +1,9 @@
-package utilities.sms;
+package utilities;
 
 public class DummyData {
 
+    // Format: {Name, Category, Supplier, Price, Cost, Stock, ReorderLevel}
     static String[][] dummyProduct = {
-            // Format: {Name, Category, Supplier, Price, Cost, Stock, ReorderLevel}
             {"Pencil", "pen", "Aali", "14.40", "10.50", "100", "20"},
             {"Red Ballpen", "pen", "Aali", "16.20", "14.20", "50", "20"},
             {"Blue Ballpen", "pen", "Aali", "16.20", "14.20", "75", "20"},
