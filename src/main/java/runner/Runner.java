@@ -1,16 +1,9 @@
 package runner;
 
-// import javafx.application.Application;
-// import javafx.stage.Stage;
-
+import javafx.application.Application;
 
 public class Runner  {
     public static void main(String[] args) {
-
+        Application.launch(SalesMonitoringSystem.class, args);
     }
-// GUI
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//
-//    }
 }
