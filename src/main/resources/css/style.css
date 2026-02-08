@@ -1,0 +1,58 @@
+/* Root Global */
+.root {
+    -fx-background-color: #0F172A;
+    -fx-font-family: "JetBrains Mono", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+
+/* Sidebar : Buttons */
+
+.sidebar-btn:hover {
+    -fx-background-color: #475b77 !important;
+    -fx-border-color: transparent #3B82F6 transparent transparent;
+    -fx-border-width: 0 3 0 0;
+}
+
+.sidebar-btn.active {
+    -fx-background-color: linear-gradient(to right, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.05)) !important;
+    -fx-text-fill: #3B82F6 !important;
+    -fx-border-color: transparent #3B82F6 transparent transparent;
+    -fx-border-width: 0 3 0 0;
+    -fx-font-weight: 600;
+}
+
+.sidebar-btn.active:hover {
+    -fx-background-color: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.08));
+}
+
+.sidebar-btn:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.sidebar-btn.active:focused {
+    -fx-background-color: linear-gradient(to right, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.05));
+}
+
+/* Content Area */
+.content-area {
+    -fx-background-color: #16213c;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #334155;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #3B82F6;
+}
