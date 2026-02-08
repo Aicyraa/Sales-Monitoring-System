@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1050.0" spacing="20.0" style="-fx-background-color: #1E293B; -fx-background-radius: 12;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <!-- Product Image -->
+      <ImageView fx:id="productImage" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/product_placeHolder.jpg" />
+         </image>
+         <HBox.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </HBox.margin>
+      </ImageView>
+
+      <!-- Name & Category -->
+      <VBox alignment="CENTER_LEFT" prefWidth="250.0" spacing="5.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="nameLabel" text="Product Name" textFill="#f1f5f9">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="categoryLabel" text="Category | Supplier" textFill="#94a3b8">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      
+      <Separator orientation="VERTICAL" prefHeight="200.0" opacity="0.1" />
+
+      <!-- Performance / Sales -->
+      <VBox alignment="CENTER_LEFT" prefWidth="150.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+         <children>
+            <Label text="Sold" textFill="#94a3b8">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="soldLabel" text="0 items" textFill="#f1f5f9">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+
+      <Separator orientation="VERTICAL" prefHeight="200.0" opacity="0.1" />
+
+      <!-- Stock Info -->
+      <VBox alignment="CENTER_LEFT" prefWidth="150.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+         <children>
+             <Label text="Stock" textFill="#94a3b8">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="12.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" spacing="5"> 
+                <Label fx:id="stockLabel" text="100" textFill="#f1f5f9">
+                   <font>
+                      <Font name="JetBrains Mono Bold" size="14.0" />
+                   </font>
+                </Label>
+                <Label fx:id="statusLabel" text="Healthy" textFill="#22c55e">
+                   <font>
+                      <Font name="JetBrains Mono Regular" size="11.0" />
+                   </font>
+                </Label>
+            </HBox>
+         </children>
+      </VBox>
+
+      <Separator orientation="VERTICAL" prefHeight="200.0" opacity="0.1" />
+
+       <!-- Price -->
+      <VBox alignment="CENTER_LEFT" prefWidth="150.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+         <children>
+            <Label text="Price" textFill="#94a3b8">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="priceLabel" text="\$0.00" textFill="#f1f5f9">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      
+      <!-- Actions / Profit (Business Method Integration) -->
+       <VBox alignment="CENTER_LEFT" prefWidth="150.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+         <children>
+            <Label text="Profit Margin" textFill="#94a3b8">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="profitLabel" text="30%" textFill="#f1f5f9">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+   </padding>
+</HBox>

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: #1E293B;" styleClass="root" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane styleClass="root" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
 
     <!-- Sidebar -->
     <left>
@@ -54,7 +54,7 @@
                 </Label>
 
                 <!-- All Products Button -->
-                <Button fx:id="btnProducts" alignment="BOTTOM_LEFT" onAction="#switchToProducts" prefHeight="28.0" prefWidth="280.0" style="-fx-background-color: #1E293B; -fx-padding: 12 20 12 22; -fx-text-fill: #F1F5F9;" styleClass="sidebar-btn" text="All Products" textFill="#e6e7e8">
+                <Button fx:id="btnProducts" alignment="BOTTOM_LEFT" onAction="#switchToProducts" prefHeight="28.0" prefWidth="280.0" styleClass="sidebar-btn" text="All Products" textFill="#e6e7e8">
                     <graphic>
                         <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>
@@ -71,7 +71,7 @@
                 </Button>
 
                 <!-- Best Sellers Button -->
-                <Button fx:id="btnBestProduct" alignment="BOTTOM_LEFT" onAction="#switchToBestProduct" prefHeight="28.0" prefWidth="284.0" style="-fx-background-color: #1E293B; -fx-padding: 12 20 12 22; -fx-text-fill: #F1F5F9;" styleClass="sidebar-btn" text="Best Sellers" textFill="#e6e7e8">
+                <Button fx:id="btnBestProduct" alignment="BOTTOM_LEFT" onAction="#switchToBestProduct" prefHeight="28.0" prefWidth="284.0" styleClass="sidebar-btn" text="Best Sellers" textFill="#e6e7e8">
                     <graphic>
                         <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>
@@ -100,7 +100,7 @@
                 </Label>
 
                 <!-- Overview Button -->
-                <Button fx:id="btnOverview" alignment="BOTTOM_LEFT" depthTest="DISABLE" onAction="#switchToOverview" prefHeight="28.0" prefWidth="280.0" style="-fx-background-color: #1E293B; -fx-padding: 12 20 12 22; -fx-text-fill: #F1F5F9;" styleClass="sidebar-btn" text="Overview" textFill="#e6e7e8">
+                <Button fx:id="btnOverview" alignment="BOTTOM_LEFT" depthTest="DISABLE" onAction="#switchToOverview" prefHeight="28.0" prefWidth="280.0" styleClass="sidebar-btn" text="Overview" textFill="#e6e7e8">
                     <graphic>
                         <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>
@@ -120,7 +120,7 @@
                 </Button>
 
                 <!-- Revenue Button -->
-                <Button fx:id="btnRevenue" alignment="BOTTOM_LEFT" onAction="#switchToRevenue" prefHeight="28.0" prefWidth="282.0" style="-fx-background-color: #1E293B; -fx-padding: 12 20 12 22; -fx-text-fill: #F1F5F9;" styleClass="sidebar-btn" text="Revenue" textFill="#e6e7e8">
+                <Button fx:id="btnRevenue" alignment="BOTTOM_LEFT" onAction="#switchToRevenue" prefHeight="28.0" prefWidth="282.0" styleClass="sidebar-btn" text="Revenue" textFill="#e6e7e8">
                     <graphic>
                         <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>
@@ -140,7 +140,7 @@
                 </Button>
 
                 <!-- Profit Margin Button -->
-                <Button fx:id="btnProfitMargin" alignment="BOTTOM_LEFT" onAction="#switchToProfitMargin" prefHeight="28.0" prefWidth="283.0" style="-fx-background-color: #1E293B; -fx-padding: 12 20 12 22; -fx-text-fill: #F1F5F9;" styleClass="sidebar-btn" text="Profit Margin" textFill="#e6e7e8">
+                <Button fx:id="btnProfitMargin" alignment="BOTTOM_LEFT" onAction="#switchToProfitMargin" prefHeight="28.0" prefWidth="283.0" styleClass="sidebar-btn" text="Profit Margin" textFill="#e6e7e8">
                     <graphic>
                         <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>
@@ -157,7 +157,7 @@
                 </Button>
 
                 <!-- Peak Days Button -->
-                <Button fx:id="btnPeakDays" alignment="BOTTOM_LEFT" onAction="#switchToPeakDays" prefHeight="28.0" prefWidth="283.0" style="-fx-background-color: #1E293B; -fx-padding: 12 20 12 22; -fx-text-fill: #F1F5F9;" styleClass="sidebar-btn" text="Peak Days" textFill="#e6e7e8">
+                <Button fx:id="btnPeakDays" alignment="BOTTOM_LEFT" onAction="#switchToPeakDays" prefHeight="28.0" prefWidth="283.0" styleClass="sidebar-btn" text="Peak Days" textFill="#e6e7e8">
                     <graphic>
                         <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>

@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.SaleServices"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: #0B1215;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SaleServices">
+   <children>
+      <VBox layoutX="2.0" prefHeight="237.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
+               <children>
+                  <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Peak Days" textAlignment="JUSTIFY">
+                     <font>
+                        <Font name="JetBrains Mono Bold" size="41.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="22.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding>
+            </HBox>
+             <!-- Placeholder content -->
+            <VBox alignment="CENTER" prefHeight="714.0" prefWidth="1120.0" VBox.vgrow="ALWAYS">
+               <children>
+                   <Label text="Peak Days Content Here" textFill="WHITE">
+                       <font>
+                           <Font name="JetBrains Mono Regular" size="20.0" />
+                       </font>
+                   </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>
