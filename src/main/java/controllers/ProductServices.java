@@ -4,8 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import models.Products;
 import utilities.DummyData;
 
@@ -19,6 +25,14 @@ public class ProductServices implements Initializable {
 
     @FXML
     private VBox cardContainer;
+    @FXML
+    private Label totalProductsLabel;
+    @FXML
+    private Label totalValueLabel;
+    @FXML
+    private Label totalStockLabel;
+    @FXML
+    private Button btnAddProduct;
 
     private ArrayList<Products> productList = new ArrayList<>();
 
@@ -28,6 +42,60 @@ public class ProductServices implements Initializable {
         if (cardContainer != null) {
             loadDummyData();
             displayProducts();
+            calculateSummaryStats();
+        }
+    }
+
+    private void calculateSummaryStats() {
+        if (productList == null)
+            return;
+
+        int totalProducts = productList.size();
+        double totalInventoryValue = 0;
+        int totalStock = 0;
+
+        for (Products p : productList) {
+            totalInventoryValue += (p.getPrice() * p.getStock());
+            totalStock += p.getStock();
+        }
+
+        if (totalProductsLabel != null)
+            totalProductsLabel.setText(String.valueOf(totalProducts));
+        if (totalValueLabel != null)
+            totalValueLabel.setText(String.format("$%.2f", totalInventoryValue));
+        if (totalStockLabel != null)
+            totalStockLabel.setText(String.valueOf(totalStock));
+    }
+
+    @FXML
+    private void handleAddProduct() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/products/addProduct.fxml"));
+            VBox page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add New Product");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            if (btnAddProduct.getScene() != null) {
+                dialogStage.initOwner(btnAddProduct.getScene().getWindow());
+            }
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            AddProductController controller = loader.getController();
+
+            dialogStage.showAndWait();
+
+            if (controller.isSaveClicked()) {
+                Products newProduct = controller.getNewProduct();
+                if (newProduct != null) {
+                    productList.add(newProduct);
+                    displayProducts();
+                    calculateSummaryStats();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -53,8 +121,16 @@ public class ProductServices implements Initializable {
                 Label statusLabel = (Label) card.lookup("#statusLabel");
                 Label soldLabel = (Label) card.lookup("#soldLabel");
                 Label profitLabel = (Label) card.lookup("#profitLabel");
-                // ImageView productImage = (ImageView) card.lookup("#productImage"); //
-                // Placeholder is set in FXML
+                ImageView productImage = (ImageView) card.lookup("#productImage");
+
+                // Round Image
+                if (productImage != null) {
+                    Rectangle clip = new Rectangle(
+                            productImage.getFitWidth(), productImage.getFitHeight());
+                    clip.setArcWidth(20);
+                    clip.setArcHeight(20);
+                    productImage.setClip(clip);
+                }
 
                 if (nameLabel != null)
                     nameLabel.setText(product.getName());
