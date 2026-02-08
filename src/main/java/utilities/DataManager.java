@@ -13,6 +13,11 @@ public class DataManager extends DummyData {
     static ArrayList<Products> productList = new ArrayList<>();
     static ArrayList<Sales> saleList = new ArrayList<>();
 
+
+    public static ArrayList<Sales> getSaleList() {
+        return saleList;
+    }
+
     public static void generateProducts() {
         String[][] data = DummyData.getDummyProduct();
         for (String[] datum : data) {
