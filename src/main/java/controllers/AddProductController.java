@@ -16,7 +16,11 @@ public class AddProductController {
     @FXML
     private TextField priceField;
     @FXML
+    private TextField costField;
+    @FXML
     private TextField stockField;
+    @FXML
+    private TextField reOrderField;
 
     private boolean saveClicked = false;
     private Products newProduct;
@@ -30,30 +34,17 @@ public class AddProductController {
     @FXML
     private void handleSave() {
         if (isValid()) {
-            // "Name", "Category", "Stock", "Price", "Supplier"
-            // Note: Products constructor uses String[] { name, category, stock, price,
-            // supplier, image, description }
-            // or similar. Let's check Products.java constructor.
-            // Assuming for now we parse data and create an object.
-
-            // Dummy logic to create a product array as expected by Products constructor
-            // ID is auto-generated or not needed? Checked DummyData, it sends an array of
-            // strings.
-            // Let's create a temporary Products object or just pass data back.
-            // For simplicity, we will create a Products object here if possible.
-
-            // Re-checking Products.java constructor is needed to be safe, but I will assume
-            // based on DummyData usage: new Products(String[] data)
-
             String name = nameField.getText();
             String category = categoryField.getText();
             String supplier = supplierField.getText();
             String price = priceField.getText();
+            String cost = costField.getText();
             String stock = stockField.getText();
-            String image = "product_placeHolder.jpg"; // Default
-            String desc = "No description"; // Default
+            String reOrder = reOrderField.getText();
 
-            String[] data = new String[] { name, category, stock, price, supplier, image, desc };
+            // Products constructor expects: name, category, supplier, price, cost, stock,
+            // reOrderStock
+            String[] data = new String[] { name, category, supplier, price, cost, stock, reOrder };
             newProduct = new Products(data);
 
             saveClicked = true;
@@ -64,15 +55,16 @@ public class AddProductController {
 
     private boolean isValid() {
         String errorMessage = "";
-        if (nameField.getText() == null || nameField.getText().length() == 0)
+        if (nameField.getText() == null || nameField.getText().trim().isEmpty())
             errorMessage += "No name!\n";
-        if (priceField.getText() == null || priceField.getText().length() == 0)
+        if (priceField.getText() == null || priceField.getText().trim().isEmpty())
             errorMessage += "No price!\n";
+        if (stockField.getText() == null || stockField.getText().trim().isEmpty())
+            errorMessage += "No stock!\n";
 
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Show alert? For now just print
             System.out.println("Invalid input: " + errorMessage);
             return false;
         }
