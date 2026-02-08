@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ProductServices implements Initializable {
 
@@ -33,16 +35,47 @@ public class ProductServices implements Initializable {
     private Label totalStockLabel;
     @FXML
     private Button btnAddProduct;
+    @FXML
+    private ComboBox<String> filterComboBox;
 
-    private ArrayList<Products> productList = new ArrayList<>();
+    private static ArrayList<Products> productList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Only load products if cardContainer exists (i.e., we are in products.fxml)
         if (cardContainer != null) {
-            loadDummyData();
-            displayProducts();
+            if (productList.isEmpty()) {
+                loadDummyData();
+            }
+
+            // Setup Filter
+            if (filterComboBox != null) {
+                ArrayList<String> categories = productList.stream()
+                        .map(Products::getCategory)
+                        .distinct()
+                        .sorted()
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                filterComboBox.getItems().clear();
+                filterComboBox.getItems().add("All");
+                filterComboBox.getItems().addAll(categories);
+                filterComboBox.setValue("All"); // Default
+
+                filterComboBox.setOnAction(e -> applyFilter());
+            }
+
+            displayProducts(productList);
             calculateSummaryStats();
+        }
+    }
+
+    private void applyFilter() {
+        String selected = filterComboBox.getValue();
+        if (selected == null || "All".equals(selected)) {
+            displayProducts(productList);
+        } else {
+            ArrayList<Products> filtered = getCategory(productList, selected);
+            displayProducts(filtered);
         }
     }
 
@@ -89,9 +122,21 @@ public class ProductServices implements Initializable {
             if (controller.isSaveClicked()) {
                 Products newProduct = controller.getNewProduct();
                 if (newProduct != null) {
+                    System.out.println("Adding new product: " + newProduct.getName());
                     productList.add(newProduct);
-                    displayProducts();
+                    System.out.println("Current product list size: " + productList.size());
+
+                    // Update filter if new category
+                    if (filterComboBox != null && !filterComboBox.getItems().contains(newProduct.getCategory())) {
+                        filterComboBox.getItems().add(newProduct.getCategory());
+                    }
+                    if (filterComboBox != null)
+                        filterComboBox.setValue("All");
+
+                    displayProducts(productList);
                     calculateSummaryStats();
+                } else {
+                    System.out.println("New product is null!");
                 }
             }
         } catch (IOException e) {
@@ -106,10 +151,11 @@ public class ProductServices implements Initializable {
         }
     }
 
-    private void displayProducts() {
+    private void displayProducts(ArrayList<Products> productsToDisplay) {
+        System.out.println("Displaying products...");
         cardContainer.getChildren().clear();
         try {
-            for (Products product : productList) {
+            for (Products product : productsToDisplay) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/products/card.fxml"));
                 Node card = loader.load();
 
@@ -127,8 +173,8 @@ public class ProductServices implements Initializable {
                 if (productImage != null) {
                     Rectangle clip = new Rectangle(
                             productImage.getFitWidth(), productImage.getFitHeight());
-                    clip.setArcWidth(20);
-                    clip.setArcHeight(20);
+                    clip.setArcWidth(40);
+                    clip.setArcHeight(40);
                     productImage.setClip(clip);
                 }
 
@@ -136,10 +182,14 @@ public class ProductServices implements Initializable {
                     nameLabel.setText(product.getName());
                 if (categoryLabel != null)
                     categoryLabel.setText(product.getCategory() + " | " + product.getSupplier());
-                if (priceLabel != null)
+                if (priceLabel != null) {
                     priceLabel.setText(String.format("$%.2f", product.getPrice()));
-                if (stockLabel != null)
+                    priceLabel.setStyle("-fx-text-fill: #fbbf24;"); // Gold
+                }
+                if (stockLabel != null) {
                     stockLabel.setText(String.valueOf(product.getStock()));
+                    stockLabel.setStyle("-fx-text-fill: #4ade80;"); // Green
+                }
 
                 if (soldLabel != null) {
                     soldLabel.setText(product.getQtySold() + " items");

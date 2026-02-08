@@ -10,6 +10,8 @@
     -fx-background-color: #0B1215;
     /* Matches the main view */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+    -fx-border-color: #1e293b;
+    -fx-border-width: 0 1 0 0;
 }
 
 .sidebar-header {
