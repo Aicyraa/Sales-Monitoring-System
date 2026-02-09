@@ -77,15 +77,44 @@
                     </VBox>
                 </children>
             </HBox>
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: #0B1215;" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
-               <content>
-                  <VBox fx:id="cardContainer" spacing="15.0" style="-fx-background-color: #0B1215;">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
-               </content>
-            </ScrollPane>
+             <!-- Main Content Area: Split View -->
+             <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                <padding>
+                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+
+                <!-- Left Column: Available Products -->
+                <VBox spacing="10.0" HBox.hgrow="ALWAYS" prefWidth="700">
+                   <Label text="Available Products" textFill="WHITE">
+                      <font>
+                         <Font name="JetBrains Mono Bold" size="20.0" />
+                      </font>
+                   </Label>
+                   <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: #0B1215;" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+                      <content>
+                         <VBox fx:id="cardContainer" spacing="10.0" style="-fx-background-color: #0B1215;">
+                            <!-- Products loaded here -->
+                         </VBox>
+                      </content>
+                   </ScrollPane>
+                </VBox>
+
+                <!-- Right Column: Best Selling -->
+                <VBox spacing="10.0" HBox.hgrow="SOMETIMES" prefWidth="350">
+                   <Label text="Best Selling" textFill="WHITE">
+                      <font>
+                         <Font name="JetBrains Mono Bold" size="20.0" />
+                      </font>
+                   </Label>
+                   <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: #0B1215;" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+                      <content>
+                         <VBox fx:id="bestSellingContainer" spacing="10.0" style="-fx-background-color: #0B1215;">
+                            <!-- Best Selling loaded here -->
+                         </VBox>
+                      </content>
+                   </ScrollPane>
+                </VBox>
+             </HBox>
          </children>
       </VBox>
    </children>

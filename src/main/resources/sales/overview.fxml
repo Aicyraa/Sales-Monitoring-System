@@ -31,13 +31,30 @@
                </padding>
             </HBox>
 
-            <VBox spacing="20.0" VBox.vgrow="ALWAYS">
+            <HBox spacing="20.0" VBox.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
                
-               <!-- Sales Adder Section -->
-               <VBox spacing="15.0" style="-fx-background-color: #1E293B; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
+               <!-- Left Side: Recent Sales List -->
+               <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                   <Label text="Recent Sales" textFill="WHITE">
+                      <font>
+                         <Font name="JetBrains Mono Bold" size="20.0" />
+                      </font>
+                   </Label>
+                   
+                   <ScrollPane fitToWidth="true" style="-fx-background: #0B1215; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                      <content>
+                         <VBox fx:id="recentSalesContainer" spacing="10.0" style="-fx-background-color: #0B1215;">
+                            <!-- Sale items will be added here dynamically -->
+                         </VBox>
+                      </content>
+                   </ScrollPane>
+               </VBox>
+
+               <!-- Right Side: Sales Adder Section -->
+               <VBox prefWidth="400.0" spacing="15.0" style="-fx-background-color: #1E293B; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
                   <padding>
                      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                   </padding>
@@ -47,68 +64,47 @@
                            <Font name="JetBrains Mono Bold" size="20.0" />
                         </font>
                      </Label>
-                     <HBox alignment="CENTER_LEFT" spacing="20.0">
-                        <children>
-                           <VBox spacing="5.0" HBox.hgrow="ALWAYS">
-                              <Label text="Product" textFill="#94a3b8">
-                                 <font><Font name="JetBrains Mono Regular" size="12.0" /></font>
-                              </Label>
-                              <ComboBox fx:id="productComboBox" maxWidth="Infinity" prefHeight="40.0" promptText="Select Product" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 14px; -fx-mark-color: white;" />
-                           </VBox>
-                           
-                           <VBox spacing="5.0" prefWidth="150.0">
-                              <Label text="Quantity" textFill="#94a3b8">
-                                 <font><Font name="JetBrains Mono Regular" size="12.0" /></font>
-                              </Label>
-                              <TextField fx:id="qtyField" prefHeight="40.0" promptText="0" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 14px;" />
-                           </VBox>
-                           
-                           <VBox spacing="5.0" prefWidth="150.0">
-                              <Label text="Discount (%)" textFill="#94a3b8">
-                                 <font><Font name="JetBrains Mono Regular" size="12.0" /></font>
-                              </Label>
-                              <TextField fx:id="discountField" prefHeight="40.0" promptText="0" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 14px;" />
-                           </VBox>
-                           
-                           <VBox alignment="BOTTOM_LEFT" spacing="5.0">
-                               <Button fx:id="btnAddSale" onAction="#handleAddSale" prefHeight="40.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Add Sale">
-                                   <padding><Insets bottom="10" left="30" right="30" top="10" /></padding>
-                                   <font><Font name="JetBrains Mono Bold" size="14.0" /></font>
-                               </Button>
-                           </VBox>
-                        </children>
-                     </HBox>
-                     <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     
+                     <VBox spacing="15.0">
+                        <VBox spacing="5.0">
+                           <Label text="Product" textFill="#94a3b8">
+                              <font><Font name="JetBrains Mono Regular" size="12.0" /></font>
+                           </Label>
+                           <ComboBox fx:id="productComboBox" maxWidth="Infinity" prefHeight="40.0" promptText="Select Product" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 14px; -fx-mark-color: white;" />
+                        </VBox>
+                        
+                        <VBox spacing="5.0">
+                           <Label text="Quantity" textFill="#94a3b8">
+                              <font><Font name="JetBrains Mono Regular" size="12.0" /></font>
+                           </Label>
+                           <TextField fx:id="qtyField" prefHeight="40.0" promptText="0" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 14px;" />
+                        </VBox>
+                        
+                        <VBox spacing="5.0">
+                           <Label text="Discount (%)" textFill="#94a3b8">
+                              <font><Font name="JetBrains Mono Regular" size="12.0" /></font>
+                           </Label>
+                           <TextField fx:id="discountField" prefHeight="40.0" promptText="0" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 14px;" />
+                        </VBox>
+                        
+                        <Button fx:id="btnAddSale" maxWidth="Infinity" onAction="#handleAddSale" prefHeight="45.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Add Sale">
+                            <font><Font name="JetBrains Mono Bold" size="14.0" /></font>
+                        </Button>
+                     </VBox>
+
+                     <VBox spacing="5.0" style="-fx-padding: 10 0 0 0;">
                         <Label fx:id="totalAmountLabel" text="Total: ₱0.00" textFill="#4ade80">
                            <font>
                               <Font name="JetBrains Mono Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="statusLabel" text="" textFill="#94a3b8">
+                        <Label fx:id="statusLabel" text="" textFill="#94a3b8" wrapText="true">
                              <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
                         </Label>
-                     </HBox>
+                     </VBox>
                   </children>
                </VBox>
-               
-               <!-- Recent Sales Section -->
-               <Label text="Recent Sales" textFill="WHITE">
-                  <font>
-                     <Font name="JetBrains Mono Bold" size="20.0" />
-                  </font>
-                  <VBox.margin>
-                     <Insets top="10.0" />
-                  </VBox.margin>
-               </Label>
-               
-               <ScrollPane fitToWidth="true" style="-fx-background: #0B1215; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
-                  <content>
-                     <VBox fx:id="recentSalesContainer" spacing="10.0" style="-fx-background-color: #0B1215;">
-                        <!-- Sale items will be added here dynamically -->
-                     </VBox>
-                  </content>
-               </ScrollPane>
-            </VBox>
+            </HBox>
          </children>
       </VBox>
    </children>

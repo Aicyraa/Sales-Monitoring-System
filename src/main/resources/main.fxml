@@ -70,22 +70,7 @@
                </font>
                 </Button>
 
-                <!-- Best Sellers Button -->
-                <Button fx:id="btnBestProduct" alignment="BOTTOM_LEFT" onAction="#switchToBestProduct" prefHeight="28.0" prefWidth="284.0" styleClass="sidebar-btn" text="Best Sellers" textFill="#e6e7e8">
-                    <graphic>
-                        <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
-                            <image>
-                                <Image url="@icons/trophy-svgrepo-com.png" />
-                            </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </ImageView>
-                    </graphic>
-               <font>
-                  <Font name="JetBrains Mono Regular" size="14.0" />
-               </font>
-                </Button>
+
             </VBox>
 
             <!-- Sales Section -->
