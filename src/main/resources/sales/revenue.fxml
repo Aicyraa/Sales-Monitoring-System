@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controllers.RevenueController"
-            style="-fx-background-color: #0F172A;">
+            style="-fx-background-color: #0B1215;">
 
    <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
@@ -19,54 +19,70 @@
 
       <VBox spacing="15">
          <HBox alignment="CENTER_LEFT" spacing="10">
-            <Label text="Revenue Analytics" style="-fx-text-fill: #F1F5F9; -fx-font-weight: bold;">
-               <font> <Font name="System Bold" size="28"/> </font>
+            <Label text="Revenue Analytics" style="-fx-text-fill: #ffffff;">
+               <font> <Font name="JetBrains Mono Bold" size="41.0"/> </font>
             </Label>
          </HBox>
 
          <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #1E293B; -fx-padding: 15; -fx-background-radius: 8;">
-            <Label text="Period:" style="-fx-text-fill: #CBD5E1;"/>
-            <ComboBox fx:id="periodComboBox" prefWidth="120" style="-fx-background-color: #334155; -fx-text-fill: #F1F5F9;"/>
-            <Label text="From:" style="-fx-text-fill: #CBD5E1;"/>
-            <DatePicker fx:id="startDatePicker" prefWidth="140" style="-fx-background-color: #334155;"/>
-            <Label text="To:" style="-fx-text-fill: #CBD5E1;"/>
+            <Label text="Period:" style="-fx-text-fill: #94A3B8;">
+                 <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+            </Label>
+            <ComboBox fx:id="periodComboBox" prefWidth="120" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-mark-color: white;"/>
+            <Label text="From:" style="-fx-text-fill: #94A3B8;">
+                <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+            </Label>
+            <DatePicker fx:id="startDatePicker" prefWidth="140" style="-fx-background-color: #334155; -fx-text-fill: white;"/>
+            <Label text="To:" style="-fx-text-fill: #94A3B8;">
+                <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+            </Label>
             <DatePicker fx:id="endDatePicker" prefWidth="140" style="-fx-background-color: #334155;"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="refreshButton" text="Refresh" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-background-radius: 6;"/>
+            <Button fx:id="refreshButton" text="Refresh" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;">
+                <font><Font name="JetBrains Mono Bold" size="14.0" /></font>
+            </Button>
          </HBox>
 
          <HBox spacing="20" alignment="CENTER">
             <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="Total Revenue" style="-fx-text-fill: #94A3B8;"/>
-               <Label fx:id="totalRevenueLabel" text="₱0.00" style="-fx-text-fill: #10B981; -fx-font-weight: bold;"> <font> <Font size="24"/> </font> </Label>
+               <Label text="Total Revenue" style="-fx-text-fill: #94A3B8;">
+                   <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="totalRevenueLabel" text="₱0.00" style="-fx-text-fill: #4ADE80;"> <font> <Font name="JetBrains Mono Bold" size="24"/> </font> </Label>
             </VBox>
             <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="This Week" style="-fx-text-fill: #94A3B8;"/>
-               <Label fx:id="weeklyRevenueLabel" text="₱0.00" style="-fx-text-fill: #3B82F6; -fx-font-weight: bold;"> <font> <Font size="24"/> </font> </Label>
+               <Label text="This Week" style="-fx-text-fill: #94A3B8;">
+                   <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="weeklyRevenueLabel" text="₱0.00" style="-fx-text-fill: #3B82F6;"> <font> <Font name="JetBrains Mono Bold" size="24"/> </font> </Label>
             </VBox>
             <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="Today" style="-fx-text-fill: #94A3B8;"/>
-               <Label fx:id="todayRevenueLabel" text="₱0.00" style="-fx-text-fill: #F59E0B; -fx-font-weight: bold;"> <font> <Font size="24"/> </font> </Label>
+               <Label text="Today" style="-fx-text-fill: #94A3B8;">
+                   <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="todayRevenueLabel" text="₱0.00" style="-fx-text-fill: #FBBF24;"> <font> <Font name="JetBrains Mono Bold" size="24"/> </font> </Label>
             </VBox>
             <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="Avg Daily" style="-fx-text-fill: #94A3B8;"/>
-               <Label fx:id="avgDailyLabel" text="₱0.00" style="-fx-text-fill: #8B5CF6; -fx-font-weight: bold;"> <font> <Font size="24"/> </font> </Label>
+               <Label text="Avg Daily" style="-fx-text-fill: #94A3B8;">
+                   <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="avgDailyLabel" text="₱0.00" style="-fx-text-fill: #8B5CF6;"> <font> <Font name="JetBrains Mono Bold" size="24"/> </font> </Label>
             </VBox>
          </HBox>
       </VBox>
 
-      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background: transparent; -fx-background-color: transparent;">
-         <VBox spacing="20">
+      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background: #0B1215; -fx-background-color: transparent;">
+         <VBox spacing="20" style="-fx-background-color: #0B1215;">
             <HBox spacing="20" alignment="TOP_CENTER">
                <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                  <Label text="Revenue Trend" style="-fx-text-fill: #F1F5F9; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                  <Label text="Revenue Trend" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                   <LineChart fx:id="revenueLineChart" legendVisible="false" animated="true" prefHeight="300" style="-fx-background-color: transparent;">
                      <xAxis><CategoryAxis fx:id="lineChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
                      <yAxis><NumberAxis fx:id="lineChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
                   </LineChart>
                </VBox>
                <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                  <Label text="Monthly Comparison" style="-fx-text-fill: #F1F5F9; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                  <Label text="Monthly Comparison" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                   <BarChart fx:id="monthlyBarChart" legendVisible="false" animated="true" prefHeight="300" barGap="5" categoryGap="15" style="-fx-background-color: transparent;">
                      <xAxis><CategoryAxis fx:id="barChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
                      <yAxis><NumberAxis fx:id="barChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
@@ -76,14 +92,14 @@
 
             <HBox spacing="20" alignment="TOP_CENTER">
                <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                  <Label text="Cumulative Growth" style="-fx-text-fill: #F1F5F9; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                  <Label text="Cumulative Growth" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                   <AreaChart fx:id="cumulativeAreaChart" legendVisible="false" animated="true" prefHeight="300" style="-fx-background-color: transparent;">
                      <xAxis><CategoryAxis fx:id="areaChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
                      <yAxis><NumberAxis fx:id="areaChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
                   </AreaChart>
                </VBox>
                <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                  <Label text="Seasonal Distribution" style="-fx-text-fill: #F1F5F9; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                  <Label text="Seasonal Distribution" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                   <PieChart fx:id="seasonalPieChart" legendVisible="true"
                             legendSide="BOTTOM" animated="true" prefHeight="300"
                             labelLineLength="10" style="-fx-background-color: transparent;"/>
