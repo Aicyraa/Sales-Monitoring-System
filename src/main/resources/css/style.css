@@ -106,6 +106,8 @@
 .combo-box {
     -fx-background-color: #334155;
     -fx-mark-color: white;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
 }
 
 .combo-box .list-cell {
@@ -122,4 +124,27 @@
 .combo-box-popup .list-view {
     -fx-background-color: #1e293b;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+
+.date-picker {
+    -fx-background-color: #334155;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker-popup {
+    -fx-background-color: #1e293b;
 }
