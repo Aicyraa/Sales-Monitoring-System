@@ -8,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Products;
@@ -27,6 +25,8 @@ public class ProductServices implements Initializable {
 
     @FXML
     private VBox cardContainer;
+    @FXML
+    private VBox bestSellingContainer;
     @FXML
     private Label totalProductsLabel;
     @FXML
@@ -141,68 +141,78 @@ public class ProductServices implements Initializable {
 
     private void displayProducts(ArrayList<Products> productsToDisplay) {
         System.out.println("Displaying products...");
-        cardContainer.getChildren().clear();
+        if (cardContainer != null)
+            cardContainer.getChildren().clear();
+        if (bestSellingContainer != null)
+            bestSellingContainer.getChildren().clear();
+
         try {
-            for (Products product : productsToDisplay) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/products/card.fxml"));
-                Node card = loader.load();
+            // 1. Populate Available Products (Left Column) - Detailed Card
+            if (cardContainer != null) {
+                for (Products product : productsToDisplay) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/products/product_card.fxml"));
+                    Node card = loader.load();
 
-                // Populate card data
-                Label nameLabel = (Label) card.lookup("#nameLabel");
-                Label categoryLabel = (Label) card.lookup("#categoryLabel");
-                Label priceLabel = (Label) card.lookup("#priceLabel");
-                Label stockLabel = (Label) card.lookup("#stockLabel");
-                Label statusLabel = (Label) card.lookup("#statusLabel");
-                Label soldLabel = (Label) card.lookup("#soldLabel");
-                Label profitLabel = (Label) card.lookup("#profitLabel");
-                ImageView productImage = (ImageView) card.lookup("#productImage");
+                    Label nameLabel = (Label) card.lookup("#nameLabel");
+                    Label categoryLabel = (Label) card.lookup("#categoryLabel");
+                    Label priceLabel = (Label) card.lookup("#priceLabel");
+                    Label stockLabel = (Label) card.lookup("#stockLabel");
+                    Label soldLabel = (Label) card.lookup("#soldLabel");
+                    Label marginLabel = (Label) card.lookup("#marginLabel");
 
-                // Round Image
-                if (productImage != null) {
-                    Rectangle clip = new Rectangle(
-                            productImage.getFitWidth(), productImage.getFitHeight());
-                    clip.setArcWidth(40);
-                    clip.setArcHeight(40);
-                    productImage.setClip(clip);
-                }
+                    if (nameLabel != null)
+                        nameLabel.setText(product.getName());
+                    if (categoryLabel != null)
+                        categoryLabel.setText(product.getCategory() + " | " + product.getSupplier());
 
-                if (nameLabel != null)
-                    nameLabel.setText(product.getName());
-                if (categoryLabel != null)
-                    categoryLabel.setText(product.getCategory() + " | " + product.getSupplier());
-                if (priceLabel != null) {
-                    priceLabel.setText(String.format("$%.2f", product.getPrice()));
-                    priceLabel.setStyle("-fx-text-fill: #fbbf24;"); // Gold
-                }
-                if (stockLabel != null) {
-                    stockLabel.setText(String.valueOf(product.getStock()));
-                    stockLabel.setStyle("-fx-text-fill: #4ade80;"); // Green
-                }
-
-                if (soldLabel != null) {
-                    soldLabel.setText(product.getQtySold() + " items");
-                }
-
-                if (profitLabel != null) {
-                    Double[] profitData = product.getProfitMargin();
-                    // profitData[1] is percentage
-                    profitLabel.setText(String.format("%.1f%%", profitData[1]));
-                }
-
-                if (statusLabel != null) {
-                    String status = product.getStockStatus();
-                    statusLabel.setText(status);
-
-                    // Color coding
-                    if ("Low".equals(status) || "Out of stock".equals(status)) {
-                        statusLabel.setStyle("-fx-text-fill: #ef4444;"); // Red
-                    } else {
-                        statusLabel.setStyle("-fx-text-fill: #22c55e;"); // Green
+                    if (priceLabel != null) {
+                        priceLabel.setText(String.format("₱%.2f", product.getPrice()));
                     }
-                }
 
-                cardContainer.getChildren().add(card);
+                    if (stockLabel != null) {
+                        stockLabel.setText(String.valueOf(product.getStock()));
+                        // Color coding for stock
+                        if (product.getStock() <= product.getReOrderStock()) {
+                            stockLabel.setStyle("-fx-text-fill: #ef4444;"); // Red
+                        } else {
+                            stockLabel.setStyle("-fx-text-fill: #4ade80;"); // Green
+                        }
+                    }
+
+                    if (soldLabel != null) {
+                        soldLabel.setText(String.valueOf(product.getQtySold()));
+                    }
+
+                    if (marginLabel != null) {
+                        Double[] profitData = product.getProfitMargin();
+                        marginLabel.setText(String.format("%.0f%%", profitData[1]));
+                    }
+
+                    cardContainer.getChildren().add(card);
+                }
             }
+
+            // 2. Populate Best Selling (Right Column) - Minimal Card
+            if (bestSellingContainer != null) {
+                ArrayList<Products> bestSelling = new ArrayList<>(productsToDisplay);
+                bestSelling.sort(Comparator.comparingInt(Products::getQtySold).reversed());
+
+                for (Products product : bestSelling) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/products/best_seller_card.fxml"));
+                    Node card = loader.load();
+
+                    Label nameLabel = (Label) card.lookup("#nameLabel");
+                    Label soldLabel = (Label) card.lookup("#soldLabel");
+
+                    if (nameLabel != null)
+                        nameLabel.setText(product.getName());
+                    if (soldLabel != null)
+                        soldLabel.setText(product.getQtySold() + " sold");
+
+                    bestSellingContainer.getChildren().add(card);
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

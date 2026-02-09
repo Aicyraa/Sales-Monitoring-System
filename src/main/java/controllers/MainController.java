@@ -17,8 +17,7 @@ public class MainController {
     // Sidebar Buttons
     @FXML
     private Button btnProducts;
-    @FXML
-    private Button btnBestProduct;
+
     @FXML
     private Button btnOverview;
     @FXML
@@ -98,10 +97,5 @@ public class MainController {
     @FXML
     private void switchToProducts() {
         loadView("products.fxml", btnProducts);
-    }
-
-    @FXML
-    private void switchToBestProduct() {
-        loadView("bestProduct.fxml", btnBestProduct);
     }
 }

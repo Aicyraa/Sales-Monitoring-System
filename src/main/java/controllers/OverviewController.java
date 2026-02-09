@@ -47,7 +47,7 @@ public class OverviewController implements Initializable {
         ObservableList<Products> products = FXCollections.observableArrayList(DataManager.getProducts());
         productComboBox.setItems(products);
 
-        // Custom converter to show product name
+        // Custom converter to show product name in the button area
         productComboBox.setConverter(new StringConverter<Products>() {
             @Override
             public String toString(Products object) {
@@ -59,6 +59,28 @@ public class OverviewController implements Initializable {
                 return productComboBox.getItems().stream()
                         .filter(p -> p.getName().equals(string))
                         .findFirst().orElse(null);
+            }
+        });
+
+        // Cell Factory for the dropdown list to handle color coding
+        productComboBox.setCellFactory(lv -> new ListCell<Products>() {
+            @Override
+            protected void updateItem(Products item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle(null);
+                } else {
+                    setText(item.getName() + " (Stock: " + item.getCurrentStock() + ")");
+
+                    // Check logic for low stock
+                    if (item.getCurrentStock() <= item.getReOrderStock()) {
+                        setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;"); // Red for low stock
+                    } else {
+                        setStyle("-fx-text-fill: white;");
+                    }
+                }
             }
         });
 
@@ -183,32 +205,51 @@ public class OverviewController implements Initializable {
         ObservableList<Sales> sortedSales = FXCollections.observableArrayList(DataManager.getSales());
         sortedSales.sort(Comparator.comparing(Sales::getDateTime).reversed());
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        DateTimeFormatter timeFit = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter dateFit = DateTimeFormatter.ofPattern("MMM dd");
 
         for (Sales sale : sortedSales) {
-            HBox row = new HBox();
-            row.setSpacing(20);
-            row.setPadding(new Insets(10));
-            row.setStyle("-fx-background-color: #1E293B; -fx-background-radius: 8;");
-            row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
+            // Container for the sale card
+            HBox card = new HBox();
+            card.setSpacing(15);
+            card.setPadding(new Insets(15));
+            card.setStyle(
+                    "-fx-background-color: #1E293B; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);");
+            card.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+            // Left: Icon or Initials
+            Label icon = new Label("S");
+            icon.setStyle(
+                    "-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 50; -fx-min-width: 40; -fx-min-height: 40; -fx-alignment: center; -fx-font-size: 16;");
+
+            // Middle: Product Name and Time
+            VBox details = new VBox(5);
             Label name = new Label(sale.getProductName());
-            name.setPrefWidth(200);
-            name.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+            name.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;");
 
-            Label qty = new Label("Qty: " + sale.getQuantitySold());
-            qty.setPrefWidth(100);
-            qty.setStyle("-fx-text-fill: #94A3B8;");
+            Label time = new Label(sale.getDateTime().format(dateFit) + " at " + sale.getDateTime().format(timeFit));
+            time.setStyle("-fx-text-fill: #64748b; -fx-font-size: 12;");
+            details.getChildren().addAll(name, time);
+
+            // Spacer
+            javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
+            HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+
+            // Right: Qty and Total
+            VBox numbers = new VBox(5);
+            numbers.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
 
             Label total = new Label(String.format("₱%.2f", sale.getTotalAmount()));
-            total.setPrefWidth(120);
-            total.setStyle("-fx-text-fill: #4ADE80; -fx-font-weight: bold;");
+            total.setStyle("-fx-text-fill: #4ADE80; -fx-font-weight: bold; -fx-font-size: 15;");
 
-            Label date = new Label(sale.getDateTime().format(dtf));
-            date.setStyle("-fx-text-fill: #64748b;");
+            Label qty = new Label(sale.getQuantitySold() + " pcs");
+            qty.setStyle("-fx-text-fill: #94A3B8; -fx-font-size: 12;");
 
-            row.getChildren().addAll(name, qty, total, date);
-            recentSalesContainer.getChildren().add(row);
+            numbers.getChildren().addAll(total, qty);
+
+            card.getChildren().addAll(icon, details, spacer, numbers);
+            recentSalesContainer.getChildren().add(card);
         }
     }
 }
