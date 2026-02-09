@@ -14,7 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Products;
-import utilities.DummyData;
+import utilities.DataManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,19 +38,13 @@ public class ProductServices implements Initializable {
     @FXML
     private ComboBox<String> filterComboBox;
 
-    private static ArrayList<Products> productList = new ArrayList<>();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Only load products if cardContainer exists (i.e., we are in products.fxml)
         if (cardContainer != null) {
-            if (productList.isEmpty()) {
-                loadDummyData();
-            }
-
             // Setup Filter
             if (filterComboBox != null) {
-                ArrayList<String> categories = productList.stream()
+                ArrayList<String> categories = DataManager.getProducts().stream()
                         .map(Products::getCategory)
                         .distinct()
                         .sorted()
@@ -64,7 +58,7 @@ public class ProductServices implements Initializable {
                 filterComboBox.setOnAction(e -> applyFilter());
             }
 
-            displayProducts(productList);
+            displayProducts(DataManager.getProducts());
             calculateSummaryStats();
         }
     }
@@ -72,14 +66,15 @@ public class ProductServices implements Initializable {
     private void applyFilter() {
         String selected = filterComboBox.getValue();
         if (selected == null || "All".equals(selected)) {
-            displayProducts(productList);
+            displayProducts(DataManager.getProducts());
         } else {
-            ArrayList<Products> filtered = getCategory(productList, selected);
+            ArrayList<Products> filtered = getCategory(DataManager.getProducts(), selected);
             displayProducts(filtered);
         }
     }
 
     private void calculateSummaryStats() {
+        ArrayList<Products> productList = DataManager.getProducts();
         if (productList == null)
             return;
 
@@ -123,8 +118,8 @@ public class ProductServices implements Initializable {
                 Products newProduct = controller.getNewProduct();
                 if (newProduct != null) {
                     System.out.println("Adding new product: " + newProduct.getName());
-                    productList.add(newProduct);
-                    System.out.println("Current product list size: " + productList.size());
+                    DataManager.addProduct(newProduct);
+                    System.out.println("Current product list size: " + DataManager.getProducts().size());
 
                     // Update filter if new category
                     if (filterComboBox != null && !filterComboBox.getItems().contains(newProduct.getCategory())) {
@@ -133,7 +128,7 @@ public class ProductServices implements Initializable {
                     if (filterComboBox != null)
                         filterComboBox.setValue("All");
 
-                    displayProducts(productList);
+                    displayProducts(DataManager.getProducts());
                     calculateSummaryStats();
                 } else {
                     System.out.println("New product is null!");
@@ -141,13 +136,6 @@ public class ProductServices implements Initializable {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void loadDummyData() {
-        String[][] rawData = DummyData.getDummyProduct();
-        for (String[] data : rawData) {
-            productList.add(new Products(data));
         }
     }
 

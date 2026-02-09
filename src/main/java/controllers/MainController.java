@@ -11,15 +11,22 @@ import java.io.IOException;
 public class MainController {
 
     // FXML Components
-    @FXML private StackPane contentArea;
+    @FXML
+    private StackPane contentArea;
 
     // Sidebar Buttons
-    @FXML private Button btnProducts;
-    @FXML private Button btnBestProduct;
-    @FXML private Button btnOverview;
-    @FXML private Button btnRevenue;
-    @FXML private Button btnProfitMargin;
-    @FXML private Button btnPeakDays;
+    @FXML
+    private Button btnProducts;
+    @FXML
+    private Button btnBestProduct;
+    @FXML
+    private Button btnOverview;
+    @FXML
+    private Button btnRevenue;
+    @FXML
+    private Button btnProfitMargin;
+    @FXML
+    private Button btnPeakDays;
 
     private Button activeButton;
 
@@ -28,11 +35,13 @@ public class MainController {
         System.out.println("MainController initialized");
         // Set btnPRoducts as default active view
         setActiveButton(btnProducts);
-        switchToProducts();
+        switchToProfitMargin();
     }
 
     private void setActiveButton(Button button) {
-        if (activeButton != null) { activeButton.getStyleClass().remove("active");}
+        if (activeButton != null) {
+            activeButton.getStyleClass().remove("active");
+        }
         button.getStyleClass().add("active");
         activeButton = button;
     }
@@ -41,7 +50,8 @@ public class MainController {
         try {
             setActiveButton(button);
             String fullPath;
-            if (fxmlPath.equals("overview.fxml") || fxmlPath.equals("revenue.fxml") || fxmlPath.equals("profitMargin.fxml") || fxmlPath.equals("peakDays.fxml")) {
+            if (fxmlPath.equals("overview.fxml") || fxmlPath.equals("revenue.fxml")
+                    || fxmlPath.equals("profitMargin.fxml") || fxmlPath.equals("peakDays.fxml")) {
                 fullPath = "/sales/" + fxmlPath;
             } else {
                 fullPath = "/products/" + fxmlPath;

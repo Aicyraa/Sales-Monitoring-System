@@ -20,29 +20,47 @@ import java.util.*;
 
 public class RevenueController implements Initializable {
 
-    @FXML private LineChart<String, Number> revenueLineChart;
-    @FXML private CategoryAxis lineChartXAxis;
-    @FXML private NumberAxis lineChartYAxis;
+    @FXML
+    private LineChart<String, Number> revenueLineChart;
+    @FXML
+    private CategoryAxis lineChartXAxis;
+    @FXML
+    private NumberAxis lineChartYAxis;
 
-    @FXML private BarChart<String, Number> monthlyBarChart;
-    @FXML private CategoryAxis barChartXAxis;
-    @FXML private NumberAxis barChartYAxis;
+    @FXML
+    private BarChart<String, Number> monthlyBarChart;
+    @FXML
+    private CategoryAxis barChartXAxis;
+    @FXML
+    private NumberAxis barChartYAxis;
 
-    @FXML private AreaChart<String, Number> cumulativeAreaChart;
-    @FXML private CategoryAxis areaChartXAxis;
-    @FXML private NumberAxis areaChartYAxis;
+    @FXML
+    private AreaChart<String, Number> cumulativeAreaChart;
+    @FXML
+    private CategoryAxis areaChartXAxis;
+    @FXML
+    private NumberAxis areaChartYAxis;
 
-    @FXML private PieChart seasonalPieChart;
+    @FXML
+    private PieChart seasonalPieChart;
 
-    @FXML private ComboBox<String> periodComboBox;
-    @FXML private DatePicker startDatePicker;
-    @FXML private DatePicker endDatePicker;
-    @FXML private Button refreshButton;
+    @FXML
+    private ComboBox<String> periodComboBox;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private Button refreshButton;
 
-    @FXML private Label totalRevenueLabel;
-    @FXML private Label weeklyRevenueLabel;
-    @FXML private Label todayRevenueLabel;
-    @FXML private Label avgDailyLabel;
+    @FXML
+    private Label totalRevenueLabel;
+    @FXML
+    private Label weeklyRevenueLabel;
+    @FXML
+    private Label todayRevenueLabel;
+    @FXML
+    private Label avgDailyLabel;
 
     private ArrayList<Sales> salesList = new ArrayList<>();
 
@@ -63,31 +81,36 @@ public class RevenueController implements Initializable {
     }
 
     private void setupPeriodFilter() {
-        if (periodComboBox == null) return;
+        if (periodComboBox == null)
+            return;
         ObservableList<String> periods = FXCollections.observableArrayList(
-                "Daily", "Weekly", "Monthly", "Quarterly", "Yearly"
-        );
+                "Daily", "Weekly", "Monthly", "Quarterly", "Yearly");
         periodComboBox.setItems(periods);
         periodComboBox.setValue("Monthly");
     }
 
     private void setupDatePickers() {
         // Set default date to Feb 2, 2026 to match your dummy data
-        if (endDatePicker != null) endDatePicker.setValue(LocalDate.of(2026, 2, 2));
-        if (startDatePicker != null) startDatePicker.setValue(LocalDate.of(2026, 1, 1));
+        if (endDatePicker != null)
+            endDatePicker.setValue(LocalDate.of(2026, 2, 2));
+        if (startDatePicker != null)
+            startDatePicker.setValue(LocalDate.of(2026, 1, 1));
     }
 
     private void setupEventHandlers() {
-        if (refreshButton != null) refreshButton.setOnAction(e -> handleRefresh());
-        if (periodComboBox != null) periodComboBox.setOnAction(e -> loadAllCharts());
-        if (startDatePicker != null) startDatePicker.setOnAction(e -> loadAllCharts());
-        if (endDatePicker != null) endDatePicker.setOnAction(e -> loadAllCharts());
+        if (refreshButton != null)
+            refreshButton.setOnAction(e -> handleRefresh());
+        if (periodComboBox != null)
+            periodComboBox.setOnAction(e -> loadAllCharts());
+        if (startDatePicker != null)
+            startDatePicker.setOnAction(e -> loadAllCharts());
+        if (endDatePicker != null)
+            endDatePicker.setOnAction(e -> loadAllCharts());
     }
 
     private void loadSalesData() {
         try {
-            DataManager.generateSales();
-            this.salesList = DataManager.getSaleList();
+            this.salesList = DataManager.getSales();
         } catch (Exception e) {
             this.salesList = new ArrayList<>();
             System.err.println("Error loading sales data: " + e.getMessage());
@@ -95,12 +118,17 @@ public class RevenueController implements Initializable {
     }
 
     private void loadAllCharts() {
-        if (salesList == null || salesList.isEmpty()) return;
+        if (salesList == null || salesList.isEmpty())
+            return;
 
-        if (revenueLineChart != null) loadRevenueLineChart();
-        if (monthlyBarChart != null) loadMonthlyBarChart();
-        if (cumulativeAreaChart != null) loadCumulativeAreaChart();
-        if (seasonalPieChart != null) loadSeasonalPieChart();
+        if (revenueLineChart != null)
+            loadRevenueLineChart();
+        if (monthlyBarChart != null)
+            loadMonthlyBarChart();
+        if (cumulativeAreaChart != null)
+            loadCumulativeAreaChart();
+        if (seasonalPieChart != null)
+            loadSeasonalPieChart();
 
         // Run this slightly later to ensure the chart is fully drawn before coloring
         Platform.runLater(this::styleCharts);
@@ -112,14 +140,17 @@ public class RevenueController implements Initializable {
         series.setName("Revenue Trend");
 
         String period = periodComboBox.getValue();
-        if (period == null) period = "Monthly";
+        if (period == null)
+            period = "Monthly";
 
         LocalDate start = startDatePicker.getValue();
         LocalDate end = endDatePicker.getValue();
         ArrayList<Sales> filtered = filterSalesByDateRange(salesList, start, end);
 
-        if (period.equals("Monthly")) loadMonthlyRevenue(series, filtered, start, end);
-        else loadDailyRevenue(series, filtered, start, end);
+        if (period.equals("Monthly"))
+            loadMonthlyRevenue(series, filtered, start, end);
+        else
+            loadDailyRevenue(series, filtered, start, end);
 
         revenueLineChart.getData().add(series);
     }
@@ -133,7 +164,8 @@ public class RevenueController implements Initializable {
         for (Month month : Month.values()) {
             Double revenue = controllers.SaleServices.getRevenuePerMonth(salesList, month, currentYear);
             if (revenue > 0) {
-                series.getData().add(new XYChart.Data<>(month.getDisplayName(TextStyle.SHORT, Locale.getDefault()), revenue));
+                series.getData()
+                        .add(new XYChart.Data<>(month.getDisplayName(TextStyle.SHORT, Locale.getDefault()), revenue));
             }
         }
         monthlyBarChart.getData().add(series);
@@ -172,8 +204,7 @@ public class RevenueController implements Initializable {
             if (revenue > 0) {
                 PieChart.Data data = new PieChart.Data(season, revenue);
                 data.nameProperty().bind(javafx.beans.binding.Bindings.concat(
-                        season, " (", String.format("%.1f", (revenue / total * 100)), "%)"
-                ));
+                        season, " (", String.format("%.1f", (revenue / total * 100)), "%)"));
                 pieChartData.add(data);
             }
         }
@@ -181,20 +212,25 @@ public class RevenueController implements Initializable {
     }
 
     private void updateSummaryStatistics() {
-        if (salesList.isEmpty()) return;
+        if (salesList.isEmpty())
+            return;
 
         // *** FIX: Simulate "Today" as Feb 2, 2026 to match your dummy data ***
         LocalDate simulationDate = LocalDate.of(2026, 2, 2);
 
         double totalRevenue = 0;
-        for (Sales s : salesList) totalRevenue += s.getTotalAmount();
-        if (totalRevenueLabel != null) totalRevenueLabel.setText(String.format("₱%,.2f", totalRevenue));
+        for (Sales s : salesList)
+            totalRevenue += s.getTotalAmount();
+        if (totalRevenueLabel != null)
+            totalRevenueLabel.setText(String.format("₱%,.2f", totalRevenue));
 
         double todayRevenue = 0;
         for (Sales s : salesList) {
-            if (s.getDate().isEqual(simulationDate)) todayRevenue += s.getTotalAmount();
+            if (s.getDate().isEqual(simulationDate))
+                todayRevenue += s.getTotalAmount();
         }
-        if (todayRevenueLabel != null) todayRevenueLabel.setText(String.format("₱%,.2f", todayRevenue));
+        if (todayRevenueLabel != null)
+            todayRevenueLabel.setText(String.format("₱%,.2f", todayRevenue));
 
         double weeklyRevenue = 0;
         LocalDate weekStart = simulationDate.minusDays(6);
@@ -205,7 +241,8 @@ public class RevenueController implements Initializable {
                 weeklyRevenue += s.getTotalAmount();
             }
         }
-        if (weeklyRevenueLabel != null) weeklyRevenueLabel.setText(String.format("₱%,.2f", weeklyRevenue));
+        if (weeklyRevenueLabel != null)
+            weeklyRevenueLabel.setText(String.format("₱%,.2f", weeklyRevenue));
 
         if (startDatePicker != null && endDatePicker != null) {
             LocalDate start = startDatePicker.getValue();
@@ -219,7 +256,8 @@ public class RevenueController implements Initializable {
                 }
             }
             double avg = (days > 0) ? rangeRevenue / days : 0;
-            if (avgDailyLabel != null) avgDailyLabel.setText(String.format("₱%,.2f", avg));
+            if (avgDailyLabel != null)
+                avgDailyLabel.setText(String.format("₱%,.2f", avg));
         }
     }
 
@@ -237,16 +275,21 @@ public class RevenueController implements Initializable {
         }
 
         // Legends and Axes
-        Chart[] charts = {revenueLineChart, monthlyBarChart, cumulativeAreaChart, seasonalPieChart};
+        Chart[] charts = { revenueLineChart, monthlyBarChart, cumulativeAreaChart, seasonalPieChart };
         for (Chart chart : charts) {
-            if (chart == null) continue;
-            for (Node node : chart.lookupAll(".chart-legend-item")) node.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
-            for (Node node : chart.lookupAll(".axis-label")) node.setStyle("-fx-text-fill: #cbd5e1;");
-            for (Node node : chart.lookupAll(".axis-tick-label")) node.setStyle("-fx-text-fill: #94a3b8;");
+            if (chart == null)
+                continue;
+            for (Node node : chart.lookupAll(".chart-legend-item"))
+                node.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+            for (Node node : chart.lookupAll(".axis-label"))
+                node.setStyle("-fx-text-fill: #cbd5e1;");
+            for (Node node : chart.lookupAll(".axis-tick-label"))
+                node.setStyle("-fx-text-fill: #94a3b8;");
         }
     }
 
-    private void loadDailyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start, LocalDate end) {
+    private void loadDailyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start,
+            LocalDate end) {
         LocalDate current = start;
         while (!current.isAfter(end)) {
             Double revenue = controllers.SaleServices.getRevenuePerDay(sales, current);
@@ -255,7 +298,8 @@ public class RevenueController implements Initializable {
         }
     }
 
-    private void loadMonthlyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start, LocalDate end) {
+    private void loadMonthlyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start,
+            LocalDate end) {
         LocalDate current = start.withDayOfMonth(1);
         while (!current.isAfter(end)) {
             Double revenue = controllers.SaleServices.getRevenuePerMonth(sales, current.getMonth(), current.getYear());
@@ -266,7 +310,8 @@ public class RevenueController implements Initializable {
 
     private ArrayList<Sales> filterSalesByDateRange(ArrayList<Sales> sales, LocalDate start, LocalDate end) {
         ArrayList<Sales> filtered = new ArrayList<>();
-        if (sales == null) return filtered;
+        if (sales == null)
+            return filtered;
         for (Sales sale : sales) {
             LocalDate d = sale.getDate();
             if ((d.isEqual(start) || d.isAfter(start)) && (d.isEqual(end) || d.isBefore(end))) {
@@ -276,8 +321,10 @@ public class RevenueController implements Initializable {
         return filtered;
     }
 
-    @FXML public void handleRefresh() {
-        loadSalesData();
+    @FXML
+    public void handleRefresh() {
+        // DataManager handles data persistence, so just re-fetch
+        this.salesList = DataManager.getSales();
         loadAllCharts();
         updateSummaryStatistics();
     }
