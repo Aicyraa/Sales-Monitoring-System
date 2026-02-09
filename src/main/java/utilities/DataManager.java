@@ -14,6 +14,7 @@ public class DataManager extends DummyData {
         if (!dataLoaded) {
             generateProducts();
             generateSales();
+            syncStockWithSales();
             dataLoaded = true;
         }
     }
@@ -53,6 +54,17 @@ public class DataManager extends DummyData {
         String[][] data = DummyData.getDummySales();
         for (String[] datum : data) {
             saleList.add(new Sales(datum));
+        }
+    }
+
+    private static void syncStockWithSales() {
+        for (Sales sale : saleList) {
+            for (Products product : productList) {
+                if (product.getId() == sale.getProductId()) {
+                    product.deductStock(sale.getQuantitySold());
+                    break;
+                }
+            }
         }
     }
 }
