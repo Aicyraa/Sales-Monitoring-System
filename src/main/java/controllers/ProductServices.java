@@ -90,7 +90,7 @@ public class ProductServices implements Initializable {
         if (totalProductsLabel != null)
             totalProductsLabel.setText(String.valueOf(totalProducts));
         if (totalValueLabel != null)
-            totalValueLabel.setText(String.format("$%.2f", totalInventoryValue));
+            totalValueLabel.setText(String.format("₱%.2f", totalInventoryValue));
         if (totalStockLabel != null)
             totalStockLabel.setText(String.valueOf(totalStock));
     }
@@ -159,6 +159,7 @@ public class ProductServices implements Initializable {
                     Label stockLabel = (Label) card.lookup("#stockLabel");
                     Label soldLabel = (Label) card.lookup("#soldLabel");
                     Label marginLabel = (Label) card.lookup("#marginLabel");
+                    Label statusLabel = (Label) card.lookup("#statusLabel");
 
                     if (nameLabel != null)
                         nameLabel.setText(product.getName());
@@ -167,25 +168,37 @@ public class ProductServices implements Initializable {
 
                     if (priceLabel != null) {
                         priceLabel.setText(String.format("₱%.2f", product.getPrice()));
+                        priceLabel.setStyle("-fx-text-fill: #fbbf24;"); // Gold
                     }
 
                     if (stockLabel != null) {
-                        stockLabel.setText(String.valueOf(product.getStock()));
-                        // Color coding for stock
-                        if (product.getStock() <= product.getReOrderStock()) {
-                            stockLabel.setStyle("-fx-text-fill: #ef4444;"); // Red
+                        stockLabel.setText(String.valueOf(product.getCurrentStock()));
+                    }
+
+                    if (statusLabel != null) {
+                        String status = product.getStockStatus();
+                        statusLabel.setText(status);
+                        // Color coding for stock & status
+                        if (product.getCurrentStock() <= product.getReOrderStock()) {
+                            if (stockLabel != null)
+                                stockLabel.setStyle("-fx-text-fill: #ef4444;"); // Red
+                            statusLabel.setStyle("-fx-text-fill: #ef4444;"); // Red
                         } else {
-                            stockLabel.setStyle("-fx-text-fill: #4ade80;"); // Green
+                            if (stockLabel != null)
+                                stockLabel.setStyle("-fx-text-fill: #4ade80;"); // Green
+                            statusLabel.setStyle("-fx-text-fill: #22c55e;"); // Green
                         }
                     }
 
                     if (soldLabel != null) {
                         soldLabel.setText(String.valueOf(product.getQtySold()));
+                        soldLabel.setStyle("-fx-text-fill: #94a3b8;"); // Slate-400
                     }
 
                     if (marginLabel != null) {
                         Double[] profitData = product.getProfitMargin();
                         marginLabel.setText(String.format("%.0f%%", profitData[1]));
+                        marginLabel.setStyle("-fx-text-fill: #f472b6;"); // Pink
                     }
 
                     cardContainer.getChildren().add(card);
@@ -206,8 +219,10 @@ public class ProductServices implements Initializable {
 
                     if (nameLabel != null)
                         nameLabel.setText(product.getName());
-                    if (soldLabel != null)
+                    if (soldLabel != null) {
                         soldLabel.setText(product.getQtySold() + " sold");
+                        soldLabel.setStyle("-fx-text-fill: #4ade80;"); // Green
+                    }
 
                     bestSellingContainer.getChildren().add(card);
                 }

@@ -81,12 +81,12 @@ public class Products {
 
     // business method
     public String getStockStatus() {
-        if (this.currentStock > this.reOrderStock) {
-            return "Healthy";
-        } else if (this.currentStock < reOrderStock && this.stock > 0) {
+        if (this.currentStock == 0) {
+            return "Out of stock";
+        } else if (this.currentStock <= this.reOrderStock) {
             return "Low";
         } else {
-            return "Out of stock";
+            return "Healthy";
         }
     }
 

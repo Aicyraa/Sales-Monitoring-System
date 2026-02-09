@@ -10,29 +10,29 @@
             fx:controller="controllers.RevenueController"
             style="-fx-background-color: #0B1215;">
 
-   <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-         AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+    <VBox AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+       <!-- Header Section (Full Width, No Outer Padding) -->
+       <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
+          <children>
+             <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Revenue" textAlignment="JUSTIFY">
+                <font>
+                   <Font name="JetBrains Mono Bold" size="41.0" />
+                </font>
+                <HBox.margin>
+                   <Insets left="22.0" />
+                </HBox.margin>
+             </Label>
+          </children>
+          <padding>
+             <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+          </padding>
+       </HBox>
 
-      <padding>
-         <Insets top="20" right="20" bottom="20" left="20"/>
-      </padding>
-
-      <VBox spacing="15">
-         <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
-            <children>
-               <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Revenue" textAlignment="JUSTIFY">
-                  <font>
-                     <Font name="JetBrains Mono Bold" size="41.0" />
-                  </font>
-                  <HBox.margin>
-                     <Insets left="22.0" />
-                  </HBox.margin>
-               </Label>
-            </children>
-            <padding>
-               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-            </padding>
-         </HBox>
+       <!-- Main Content (With Padding) -->
+       <VBox spacing="15" VBox.vgrow="ALWAYS">
+          <padding>
+             <Insets top="20" right="20" bottom="20" left="20"/>
+          </padding>
 
          <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #1E293B; -fx-padding: 15; -fx-background-radius: 8;">
             <Label text="Period:" style="-fx-text-fill: #94A3B8;">
