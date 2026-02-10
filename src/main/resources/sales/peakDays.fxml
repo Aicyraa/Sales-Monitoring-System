@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: #0B1215;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SaleServices">
+<AnchorPane prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: #0B1215;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PeakDaysController">
    <children>
       <VBox layoutX="2.0" prefHeight="237.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <!-- Header Section -->
             <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
                <children>
                   <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Peak Days" textAlignment="JUSTIFY">
@@ -26,16 +29,81 @@
                   <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                </padding>
             </HBox>
-             <!-- Placeholder content -->
-            <VBox alignment="CENTER" prefHeight="714.0" prefWidth="1120.0" VBox.vgrow="ALWAYS">
-               <children>
-                   <Label text="Peak Days Content Here" textFill="WHITE">
-                       <font>
-                           <Font name="JetBrains Mono Regular" size="20.0" />
-                       </font>
-                   </Label>
-               </children>
-            </VBox>
+
+            <!-- Main Content -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background: #0B1215; -fx-background-color: transparent;">
+               <VBox spacing="20" style="-fx-background-color: #0B1215;">
+                  <padding>
+                     <Insets top="20" right="20" bottom="20" left="20"/>
+                  </padding>
+
+                  <!-- Summary Cards -->
+                  <HBox spacing="20" alignment="CENTER">
+                     <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label text="Best Day" style="-fx-text-fill: #94A3B8;">
+                           <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="bestDayLabel" text="Monday" style="-fx-text-fill: #3B82F6;">
+                           <font><Font name="JetBrains Mono Bold" size="20"/></font>
+                        </Label>
+                        <Label fx:id="bestDayRevenueLabel" text="₱0.00" style="-fx-text-fill: #94A3B8;">
+                           <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+                        </Label>
+                     </VBox>
+
+                     <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label text="Best Month" style="-fx-text-fill: #94A3B8;">
+                           <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="bestMonthLabel" text="January" style="-fx-text-fill: #4ADE80;">
+                           <font><Font name="JetBrains Mono Bold" size="20"/></font>
+                        </Label>
+                        <Label fx:id="bestMonthRevenueLabel" text="₱0.00" style="-fx-text-fill: #94A3B8;">
+                           <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+                        </Label>
+                     </VBox>
+
+                     <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label text="Best Season" style="-fx-text-fill: #94A3B8;">
+                           <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="bestSeasonLabel" text="Regular" style="-fx-text-fill: #FBBF24;">
+                           <font><Font name="JetBrains Mono Bold" size="20"/></font>
+                        </Label>
+                        <Label fx:id="bestSeasonRevenueLabel" text="₱0.00" style="-fx-text-fill: #94A3B8;">
+                           <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+                        </Label>
+                     </VBox>
+                  </HBox>
+
+                  <!-- Charts Row 1: Best Day and Best Month -->
+                  <HBox spacing="20" alignment="TOP_CENTER">
+                     <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label text="Revenue by Day of Week" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <BarChart fx:id="bestDayChart" legendVisible="false" animated="true" prefHeight="300" barGap="5" categoryGap="15" style="-fx-background-color: transparent;">
+                           <xAxis><CategoryAxis fx:id="dayChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
+                           <yAxis><NumberAxis fx:id="dayChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
+                        </BarChart>
+                     </VBox>
+
+                     <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label text="Revenue by Month" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <BarChart fx:id="bestMonthChart" legendVisible="false" animated="true" prefHeight="300" barGap="5" categoryGap="15" style="-fx-background-color: transparent;">
+                           <xAxis><CategoryAxis fx:id="monthChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
+                           <yAxis><NumberAxis fx:id="monthChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
+                        </BarChart>
+                     </VBox>
+                  </HBox>
+
+                  <!-- Charts Row 2: Best Season -->
+                  <HBox spacing="20" alignment="TOP_CENTER">
+                     <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label text="Revenue by Season" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <PieChart fx:id="bestSeasonChart" legendVisible="true" legendSide="BOTTOM" animated="true" prefHeight="350" labelLineLength="10" style="-fx-background-color: transparent;"/>
+                     </VBox>
+                  </HBox>
+               </VBox>
+            </ScrollPane>
          </children>
       </VBox>
    </children>

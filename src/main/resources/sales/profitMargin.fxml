@@ -7,92 +7,85 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controllers.ProfitMarginController"
-            style="-fx-background-color: #1e2936;">
+            style="-fx-background-color: #0B1215;">
 
    <top>
-      <VBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 20;">
-         <Label text="Profit Margin Analysis" textFill="white">
-            <font>
-               <Font name="System Bold" size="24"/>
-            </font>
-         </Label>
-         <Label text="View profit margins and profitability metrics for your products"
-                textFill="#ecf0f1">
-            <font>
-               <Font size="14"/>
-            </font>
-         </Label>
-      </VBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
+         <children>
+            <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Profit Margin" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="41.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="22.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+         </padding>
+      </HBox>
    </top>
 
    <center>
-      <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #1e2936;">
+      <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #0B1215;">
 
          <!-- Summary Cards -->
          <HBox spacing="20" alignment="CENTER">
-            <VBox spacing="5" style="-fx-background-color: #3498db; -fx-padding: 20;
-                                         -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="Total Revenue" textFill="white">
-                  <font><Font size="14"/></font>
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label text="Total Profit" style="-fx-text-fill: #94A3B8;">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
                </Label>
-               <Label fx:id="totalRevenueLabel" text="₱0.00" textFill="white">
-                  <font><Font name="System Bold" size="24"/></font>
-               </Label>
-            </VBox>
-
-            <VBox spacing="5" style="-fx-background-color: #2ecc71; -fx-padding: 20;
-                                         -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="Total Profit" textFill="white">
-                  <font><Font size="14"/></font>
-               </Label>
-               <Label fx:id="totalProfitLabel" text="₱0.00" textFill="white">
-                  <font><Font name="System Bold" size="24"/></font>
+               <Label fx:id="totalProfitLabel" text="₱0.00" style="-fx-text-fill: #4ADE80;">
+                  <font><Font name="JetBrains Mono Bold" size="24"/></font>
                </Label>
             </VBox>
 
-            <VBox spacing="5" style="-fx-background-color: #e74c3c; -fx-padding: 20;
-                                         -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <Label text="Average Margin" textFill="white">
-                  <font><Font size="14"/></font>
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label text="Average Margin" style="-fx-text-fill: #94A3B8;">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
                </Label>
-               <Label fx:id="avgMarginLabel" text="0%" textFill="white">
-                  <font><Font name="System Bold" size="24"/></font>
+               <Label fx:id="avgMarginLabel" text="0%" style="-fx-text-fill: #3B82F6;">
+                  <font><Font name="JetBrains Mono Bold" size="24"/></font>
                </Label>
             </VBox>
          </HBox>
 
          <!-- Filter Section -->
          <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 15;
-                                                               -fx-background-color: #2c3e50;
-                                                               -fx-background-radius: 5;">
-            <Label text="Filter by Category:" textFill="#ecf0f1">
-               <font><Font name="System Bold" size="14"/></font>
+                                                               -fx-background-color: #1E293B;
+                                                               -fx-background-radius: 8;">
+            <Label text="Filter by Category:" style="-fx-text-fill: #94A3B8;">
+               <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
             </Label>
             <ComboBox fx:id="categoryFilter" promptText="All Categories"
-                      prefWidth="200" onAction="#filterByCategory"/>
+                      prefWidth="200" onAction="#filterByCategory"
+                      style="-fx-background-color: #334155; -fx-text-fill: white; -fx-mark-color: white;"/>
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <Label text="Sort by:" textFill="#ecf0f1">
-               <font><Font name="System Bold" size="14"/></font>
+            <Label text="Sort by:" style="-fx-text-fill: #94A3B8;">
+               <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
             </Label>
             <ComboBox fx:id="sortByCombo" promptText="Profit Margin"
-                      prefWidth="200" onAction="#sortTable"/>
+                      prefWidth="200" onAction="#sortTable"
+                      style="-fx-background-color: #334155; -fx-text-fill: white; -fx-mark-color: white;"/>
 
             <Button text="Refresh" onAction="#refreshData"
-                    style="-fx-background-color: #3498db; -fx-text-fill: white;
-                               -fx-padding: 8 20; -fx-background-radius: 5;">
-               <font><Font name="System Bold" size="12"/></font>
+                    style="-fx-background-color: #3B82F6; -fx-text-fill: white;
+                               -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;">
+               <font><Font name="JetBrains Mono Bold" size="14.0" /></font>
             </Button>
          </HBox>
 
          <!-- Table with Inline Dark Styling -->
          <TableView fx:id="profitTable" VBox.vgrow="ALWAYS"
-                    style="-fx-background-color: #2c3e50;
-                              -fx-control-inner-background: #34495e;
-                              -fx-control-inner-background-alt: #2c3e50;
-                              -fx-table-cell-border-color: #1e2936;
-                              -fx-text-fill: white;">
+                    style="-fx-background-color: #1E293B;
+                              -fx-control-inner-background: #0F172A;
+                              -fx-control-inner-background-alt: #1E293B;
+                              -fx-table-cell-border-color: #334155;
+                              -fx-text-fill: white;
+                              -fx-background-radius: 10;">
             <columns>
                <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
                <TableColumn fx:id="nameColumn" text="Product Name" prefWidth="150"/>
