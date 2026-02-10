@@ -16,24 +16,38 @@ import java.util.stream.Collectors;
 
 public class ProfitMarginController {
 
-    @FXML private Label totalRevenueLabel;
-    @FXML private Label totalProfitLabel;
-    @FXML private Label avgMarginLabel;
+    @FXML
+    private Label totalProfitLabel;
+    @FXML
+    private Label avgMarginLabel;
 
-    @FXML private ComboBox<String> categoryFilter;
-    @FXML private ComboBox<String> sortByCombo;
+    @FXML
+    private ComboBox<String> categoryFilter;
+    @FXML
+    private ComboBox<String> sortByCombo;
 
-    @FXML private TableView<ProfitItem> profitTable;
-    @FXML private TableColumn<ProfitItem, Integer> idColumn;
-    @FXML private TableColumn<ProfitItem, String> nameColumn;
-    @FXML private TableColumn<ProfitItem, String> categoryColumn;
-    @FXML private TableColumn<ProfitItem, Double> costColumn;
-    @FXML private TableColumn<ProfitItem, Double> priceColumn;
-    @FXML private TableColumn<ProfitItem, Double> unitProfitColumn;
-    @FXML private TableColumn<ProfitItem, Double> marginColumn;
-    @FXML private TableColumn<ProfitItem, Integer> quantitySoldColumn;
-    @FXML private TableColumn<ProfitItem, Double> totalRevenueColumn;
-    @FXML private TableColumn<ProfitItem, Double> totalProfitColumn;
+    @FXML
+    private TableView<ProfitItem> profitTable;
+    @FXML
+    private TableColumn<ProfitItem, Integer> idColumn;
+    @FXML
+    private TableColumn<ProfitItem, String> nameColumn;
+    @FXML
+    private TableColumn<ProfitItem, String> categoryColumn;
+    @FXML
+    private TableColumn<ProfitItem, Double> costColumn;
+    @FXML
+    private TableColumn<ProfitItem, Double> priceColumn;
+    @FXML
+    private TableColumn<ProfitItem, Double> unitProfitColumn;
+    @FXML
+    private TableColumn<ProfitItem, Double> marginColumn;
+    @FXML
+    private TableColumn<ProfitItem, Integer> quantitySoldColumn;
+    @FXML
+    private TableColumn<ProfitItem, Double> totalRevenueColumn;
+    @FXML
+    private TableColumn<ProfitItem, Double> totalProfitColumn;
 
     private ObservableList<ProfitItem> profitItems;
     private ObservableList<ProfitItem> allProfitItems;
@@ -48,7 +62,8 @@ public class ProfitMarginController {
     // ========== CALCULATION METHODS ==========
 
     private double calculateProfitMargin(double sellingPrice, double cost) {
-        if (sellingPrice == 0) return 0.0;
+        if (sellingPrice == 0)
+            return 0.0;
         return ((sellingPrice - cost) / sellingPrice) * 100;
     }
 
@@ -107,11 +122,15 @@ public class ProfitMarginController {
         categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCategory()));
         costColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCost()).asObject());
         priceColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getPrice()).asObject());
-        unitProfitColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getUnitProfit()).asObject());
+        unitProfitColumn
+                .setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getUnitProfit()).asObject());
         marginColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getMargin()).asObject());
-        quantitySoldColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getQuantitySold()).asObject());
-        totalRevenueColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getTotalRevenue()).asObject());
-        totalProfitColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getTotalProfit()).asObject());
+        quantitySoldColumn
+                .setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getQuantitySold()).asObject());
+        totalRevenueColumn
+                .setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getTotalRevenue()).asObject());
+        totalProfitColumn
+                .setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getTotalProfit()).asObject());
 
         costColumn.setCellFactory(col -> new CurrencyCell<>());
         priceColumn.setCellFactory(col -> new CurrencyCell<>());
@@ -136,8 +155,7 @@ public class ProfitMarginController {
                 "Profit Margin (Low to High)",
                 "Total Profit (High to Low)",
                 "Total Revenue (High to Low)",
-                "Product Name (A-Z)"
-        );
+                "Product Name (A-Z)");
         sortByCombo.setItems(sortOptions);
         sortByCombo.setValue("Profit Margin (High to Low)");
     }
@@ -165,8 +183,7 @@ public class ProfitMarginController {
                     margin,
                     quantitySold,
                     totalRevenue,
-                    totalProfit
-            );
+                    totalProfit);
 
             allProfitItems.add(item);
         }
@@ -179,10 +196,6 @@ public class ProfitMarginController {
     }
 
     private void updateSummary() {
-        double totalRevenue = profitItems.stream()
-                .mapToDouble(ProfitItem::getTotalRevenue)
-                .sum();
-
         double totalProfit = profitItems.stream()
                 .mapToDouble(ProfitItem::getTotalProfit)
                 .sum();
@@ -192,7 +205,6 @@ public class ProfitMarginController {
                 .average()
                 .orElse(0.0);
 
-        totalRevenueLabel.setText(String.format("₱%.2f", totalRevenue));
         totalProfitLabel.setText(String.format("₱%.2f", totalProfit));
         avgMarginLabel.setText(String.format("%.2f%%", avgMargin));
     }
@@ -218,7 +230,8 @@ public class ProfitMarginController {
     private void sortTable() {
         String sortBy = sortByCombo.getValue();
 
-        if (sortBy == null) return;
+        if (sortBy == null)
+            return;
 
         Comparator<ProfitItem> comparator;
 
@@ -299,8 +312,8 @@ public class ProfitMarginController {
         private final double totalProfit;
 
         public ProfitItem(int id, String name, String category, double cost, double price,
-                          double unitProfit, double margin, int quantitySold,
-                          double totalRevenue, double totalProfit) {
+                double unitProfit, double margin, int quantitySold,
+                double totalRevenue, double totalProfit) {
             this.id = id;
             this.name = name;
             this.category = category;
@@ -313,15 +326,44 @@ public class ProfitMarginController {
             this.totalProfit = totalProfit;
         }
 
-        public int getId() { return id; }
-        public String getName() { return name; }
-        public String getCategory() { return category; }
-        public double getCost() { return cost; }
-        public double getPrice() { return price; }
-        public double getUnitProfit() { return unitProfit; }
-        public double getMargin() { return margin; }
-        public int getQuantitySold() { return quantitySold; }
-        public double getTotalRevenue() { return totalRevenue; }
-        public double getTotalProfit() { return totalProfit; }
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
+        public double getCost() {
+            return cost;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public double getUnitProfit() {
+            return unitProfit;
+        }
+
+        public double getMargin() {
+            return margin;
+        }
+
+        public int getQuantitySold() {
+            return quantitySold;
+        }
+
+        public double getTotalRevenue() {
+            return totalRevenue;
+        }
+
+        public double getTotalProfit() {
+            return totalProfit;
+        }
     }
 }

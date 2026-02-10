@@ -286,6 +286,52 @@ public class RevenueController implements Initializable {
             for (Node node : chart.lookupAll(".axis-tick-label"))
                 node.setStyle("-fx-text-fill: #94a3b8;");
         }
+
+        // Apply custom colors to charts
+        applyLineChartColors(revenueLineChart, "#3B82F6");
+        applyBarChartColors(monthlyBarChart, "#4ADE80");
+        applyAreaChartColors(cumulativeAreaChart, "#8B5CF6");
+    }
+
+    private void applyLineChartColors(LineChart<String, Number> chart, String color) {
+        if (chart == null)
+            return;
+
+        Platform.runLater(() -> {
+            for (Node node : chart.lookupAll(".chart-series-line")) {
+                node.setStyle("-fx-stroke: " + color + "; -fx-stroke-width: 3px;");
+            }
+            for (Node node : chart.lookupAll(".chart-line-symbol")) {
+                node.setStyle("-fx-background-color: " + color
+                        + ", white; -fx-background-insets: 0, 2; -fx-background-radius: 5px; -fx-padding: 5px;");
+            }
+        });
+    }
+
+    private void applyBarChartColors(BarChart<String, Number> chart, String color) {
+        if (chart == null)
+            return;
+
+        Platform.runLater(() -> {
+            for (Node node : chart.lookupAll(".chart-bar")) {
+                node.setStyle("-fx-bar-fill: " + color + ";");
+            }
+        });
+    }
+
+    private void applyAreaChartColors(AreaChart<String, Number> chart, String color) {
+        if (chart == null)
+            return;
+
+        Platform.runLater(() -> {
+            for (Node node : chart.lookupAll(".chart-series-area-line")) {
+                node.setStyle("-fx-stroke: " + color + "; -fx-stroke-width: 3px;");
+            }
+            for (Node node : chart.lookupAll(".chart-series-area-fill")) {
+                // Convert hex to rgba with transparency
+                node.setStyle("-fx-fill: " + color + "40;"); // 40 is hex for ~25% opacity
+            }
+        });
     }
 
     private void loadDailyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start,
