@@ -19,6 +19,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Overview Dashboard.
+ * Manages the "Quick Sale" functionality and displays a list of recent
+ * transactions.
+ */
 public class OverviewController implements Initializable {
 
     @FXML
@@ -36,6 +41,15 @@ public class OverviewController implements Initializable {
     @FXML
     private Label statusLabel;
 
+    /**
+     * Initializes the controller class.
+     * Sets up the product selection, input validation, and initial sales list.
+     *
+     * @param location  The location used to resolve relative paths for the root
+     *                  object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if
+     *                  the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupProductComboBox();
@@ -43,6 +57,11 @@ public class OverviewController implements Initializable {
         refreshSalesList();
     }
 
+    /**
+     * Configures the product combo box.
+     * Sets up a custom string converter to display product names with stock levels.
+     * Applies a custom cell factory to visually highlight low-stock items (in red).
+     */
     private void setupProductComboBox() {
         ObservableList<Products> products = FXCollections.observableArrayList(DataManager.getProducts());
         productComboBox.setItems(products);
@@ -88,6 +107,11 @@ public class OverviewController implements Initializable {
         productComboBox.setOnAction(e -> calculateTotal());
     }
 
+    /**
+     * Sets up input validation listeners for quantity and discount fields.
+     * Ensures only numeric input is accepted and auto-recalculates totals on
+     * change.
+     */
     private void setupValidation() {
         qtyField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -104,6 +128,11 @@ public class OverviewController implements Initializable {
         });
     }
 
+    /**
+     * Calculates the total sale amount based on selected product, quantity, and
+     * discount.
+     * Updates the total amount label in real-time.
+     */
     private void calculateTotal() {
         try {
             Products selected = productComboBox.getValue();
@@ -127,6 +156,11 @@ public class OverviewController implements Initializable {
         }
     }
 
+    /**
+     * Handles the "Add Sale" button click.
+     * Validates input, checks stock availability, creates a new sale record,
+     * updates inventory, and refreshes the display.
+     */
     @FXML
     private void handleAddSale() {
         statusLabel.setText("");
@@ -189,6 +223,13 @@ public class OverviewController implements Initializable {
         setupProductComboBox();
     }
 
+    /**
+     * Helper method to display status messages to the user.
+     *
+     * @param msg     The message to display.
+     * @param isError True if the message is an error (displayed in red), false for
+     *                success (green).
+     */
     private void showMessage(String msg, boolean isError) {
         statusLabel.setText(msg);
         if (isError) {
@@ -198,6 +239,10 @@ public class OverviewController implements Initializable {
         }
     }
 
+    /**
+     * Refreshes the list of recent sales displayed in the VBox container.
+     * Sorts sales by date (newest first) and creates a UI card for each sale.
+     */
     private void refreshSalesList() {
         recentSalesContainer.getChildren().clear();
 
@@ -210,7 +255,7 @@ public class OverviewController implements Initializable {
 
         for (Sales sale : sortedSales) {
 
-            // Container for the sale card
+            // Create container for the sale card
             HBox card = new HBox();
             card.setSpacing(15);
             card.setPadding(new Insets(15));

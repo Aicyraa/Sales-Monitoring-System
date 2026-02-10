@@ -21,6 +21,10 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing product-related views and operations.
+ * Handles displaying the product catalog, filtering, and summary statistics.
+ */
 public class ProductServices implements Initializable {
 
     @FXML
@@ -38,11 +42,20 @@ public class ProductServices implements Initializable {
     @FXML
     private ComboBox<String> filterComboBox;
 
+    /**
+     * Initializes the controller class.
+     * Sets up category filters and loads the initial product list if UI containers
+     * are present.
+     *
+     * @param location  The location used to resolve relative paths for the root
+     *                  object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if
+     *                  the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Only load products if cardContainer exists (i.e., we are in products.fxml)
         if (cardContainer != null) {
-            // Setup Filter
+            // Setup Category Filter
             if (filterComboBox != null) {
                 ArrayList<String> categories = DataManager.getProducts().stream()
                         .map(Products::getCategory)
@@ -63,6 +76,11 @@ public class ProductServices implements Initializable {
         }
     }
 
+    /**
+     * Applies the selected category filter to the product display.
+     * Updates the main product list to show only items matching the chosen
+     * category.
+     */
     private void applyFilter() {
         String selected = filterComboBox.getValue();
         if (selected == null || "All".equals(selected)) {
@@ -73,6 +91,11 @@ public class ProductServices implements Initializable {
         }
     }
 
+    /**
+     * Calculates and displays summary statistics for inventory.
+     * Updates labels for Total Products, Total Inventory Value, and Total Stock
+     * Count.
+     */
     private void calculateSummaryStats() {
         ArrayList<Products> productList = DataManager.getProducts();
         if (productList == null)
@@ -95,6 +118,11 @@ public class ProductServices implements Initializable {
             totalStockLabel.setText(String.valueOf(totalStock));
     }
 
+    /**
+     * Opens a modal dialog to add a new product.
+     * Handles the dialog result and updates the product list if a new product is
+     * saved.
+     */
     @FXML
     private void handleAddProduct() {
         try {
@@ -139,6 +167,12 @@ public class ProductServices implements Initializable {
         }
     }
 
+    /**
+     * Renders product cards in the UI.
+     * Populates both the main product grid and the best-selling list.
+     *
+     * @param productsToDisplay The list of products to render.
+     */
     private void displayProducts(ArrayList<Products> productsToDisplay) {
         System.out.println("Displaying products...");
         if (cardContainer != null)
@@ -147,7 +181,7 @@ public class ProductServices implements Initializable {
             bestSellingContainer.getChildren().clear();
 
         try {
-            // 1. Populate Available Products (Left Column) - Detailed Card
+            // Populate Main Available Products List
             if (cardContainer != null) {
                 for (Products product : productsToDisplay) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/products/product_card.fxml"));
@@ -205,7 +239,7 @@ public class ProductServices implements Initializable {
                 }
             }
 
-            // 2. Populate Best Selling (Right Column) - Minimal Card
+            // Populate Best Selling List (Right Column)
             if (bestSellingContainer != null) {
                 ArrayList<Products> bestSelling = new ArrayList<>(productsToDisplay);
                 bestSelling.sort(Comparator.comparingInt(Products::getQtySold).reversed());
@@ -233,18 +267,37 @@ public class ProductServices implements Initializable {
         }
     }
 
+    /**
+     * Filters a list of products by category.
+     *
+     * @param products The source list of products.
+     * @param category The category name to filter by.
+     * @return A new list containing products belonging to the specified category.
+     */
     public static ArrayList<Products> getCategory(ArrayList<Products> products, String category) {
         return new ArrayList<>(products.stream().filter(p -> p.getCategory().equalsIgnoreCase(category)).toList());
     }
 
+    /**
+     * Returns a list of products sorted by quantity sold (descending).
+     *
+     * @param products The source list of products.
+     * @return A new list of products sorted by sales volume.
+     */
     public static ArrayList<Products> getBestSelling(ArrayList<Products> products) {
         return new ArrayList<>(
                 products.stream().sorted(Comparator.comparingInt(Products::getQtySold).reversed()).toList());
     }
 
+    /**
+     * Adds a new product to the list.
+     *
+     * @param products The product list.
+     * @param p        The product to add.
+     * @return The updated list of products.
+     */
     public static ArrayList<Products> add(ArrayList<Products> products, Products p) {
         products.add(p);
         return products;
     }
-
 }

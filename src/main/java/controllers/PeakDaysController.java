@@ -18,6 +18,11 @@ import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.*;
 
+/**
+ * Controller for the Peak Days analytics view.
+ * Displays charts and statistics showing best performing days, months, and
+ * seasons based on product sales.
+ */
 public class PeakDaysController implements Initializable {
 
     @FXML
@@ -52,6 +57,13 @@ public class PeakDaysController implements Initializable {
 
     private ArrayList<Sales> salesList = new ArrayList<>();
 
+    /**
+     * Initializes the controller after FXML loading.
+     * Loads sales data and populates all charts and statistics.
+     * 
+     * @param location  URL location used to resolve relative paths
+     * @param resources ResourceBundle for localization
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -67,6 +79,10 @@ public class PeakDaysController implements Initializable {
         }
     }
 
+    /**
+     * Loads sales data from the DataManager.
+     * Initializes an empty list if loading fails.
+     */
     private void loadSalesData() {
         try {
             this.salesList = DataManager.getSales();
@@ -76,6 +92,10 @@ public class PeakDaysController implements Initializable {
         }
     }
 
+    /**
+     * Loads and populates the bar chart showing products sold by day of week.
+     * Aggregates all sales data by day of week and displays total product counts.
+     */
     private void loadBestDayChart() {
         if (bestDayChart == null)
             return;
@@ -103,6 +123,10 @@ public class PeakDaysController implements Initializable {
         bestDayChart.getData().add(series);
     }
 
+    /**
+     * Loads and populates the bar chart showing products sold by month.
+     * Aggregates sales data for the current year (2026) by month.
+     */
     private void loadBestMonthChart() {
         if (bestMonthChart == null)
             return;
@@ -137,6 +161,10 @@ public class PeakDaysController implements Initializable {
         bestMonthChart.getData().add(series);
     }
 
+    /**
+     * Loads and populates the pie chart showing products sold by season.
+     * Displays percentage breakdown of products sold in each season.
+     */
     private void loadBestSeasonChart() {
         if (bestSeasonChart == null)
             return;
@@ -170,8 +198,11 @@ public class PeakDaysController implements Initializable {
         bestSeasonChart.setData(pieChartData);
     }
 
+    /**
+     * Updates the summary labels showing best performing day, month, and season.
+     * Calculates which time periods had the highest product sales.
+     */
     private void updateBestPerformers() {
-        // Find best day
         Map<DayOfWeek, Integer> productsByDay = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
             productsByDay.put(day, 0);
@@ -190,7 +221,6 @@ public class PeakDaysController implements Initializable {
             bestDayRevenueLabel.setText(String.format("%,d products", bestDayCount));
         }
 
-        // Find best month
         int currentYear = 2026;
         Map<Month, Integer> productsByMonth = new HashMap<>();
         for (Month month : Month.values()) {
@@ -212,7 +242,6 @@ public class PeakDaysController implements Initializable {
             bestMonthRevenueLabel.setText(String.format("%,d products", bestMonthCount));
         }
 
-        // Find best season
         Map<String, Integer> productsBySeason = new HashMap<>();
         for (Sales sale : salesList) {
             if (sale.getSeasonTag() != null && !sale.getSeasonTag().isEmpty()) {
@@ -234,8 +263,12 @@ public class PeakDaysController implements Initializable {
         }
     }
 
+    /**
+     * Applies custom styling to all charts.
+     * Sets text colors, legend styles, and axis label colors to match the system
+     * theme.
+     */
     private void styleCharts() {
-        // Style pie chart
         if (bestSeasonChart != null) {
             for (Node node : bestSeasonChart.lookupAll(".chart-pie-label")) {
                 if (node instanceof Text) {
@@ -247,7 +280,6 @@ public class PeakDaysController implements Initializable {
             }
         }
 
-        // Style all charts
         Chart[] charts = { bestDayChart, bestMonthChart, bestSeasonChart };
         for (Chart chart : charts) {
             if (chart == null)
@@ -261,11 +293,17 @@ public class PeakDaysController implements Initializable {
                 node.setStyle("-fx-text-fill: #94a3b8;");
         }
 
-        // Apply custom colors to bar charts
         applyChartColors(bestDayChart, "#3B82F6");
         applyChartColors(bestMonthChart, "#4ADE80");
     }
 
+    /**
+     * Applies custom color to bar chart bars.
+     * Uses Platform.runLater to ensure chart is fully rendered before styling.
+     * 
+     * @param chart The bar chart to style
+     * @param color Hex color code for the bars
+     */
     private void applyChartColors(BarChart<String, Number> chart, String color) {
         if (chart == null)
             return;

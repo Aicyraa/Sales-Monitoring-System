@@ -18,6 +18,11 @@ import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.*;
 
+/**
+ * Controller class for the Revenue Dashboard.
+ * Manages the display of revenue charts, summary statistics, and date
+ * filtering.
+ */
 public class RevenueController implements Initializable {
 
     @FXML
@@ -64,6 +69,15 @@ public class RevenueController implements Initializable {
 
     private ArrayList<Sales> salesList = new ArrayList<>();
 
+    /**
+     * Initializes the controller class.
+     * Sets up filters, date pickers, event handlers, and loads initial data.
+     *
+     * @param location  The location used to resolve relative paths for the root
+     *                  object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if
+     *                  the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -80,6 +94,10 @@ public class RevenueController implements Initializable {
         }
     }
 
+    /**
+     * Configures the period combo box with available time range options.
+     * Default selection is "Monthly".
+     */
     private void setupPeriodFilter() {
         if (periodComboBox == null)
             return;
@@ -89,14 +107,22 @@ public class RevenueController implements Initializable {
         periodComboBox.setValue("Monthly");
     }
 
+    /**
+     * Sets default values for the date pickers.
+     * Initializes the view with a preset date range to show relevant data.
+     */
     private void setupDatePickers() {
-        // Set default date to Feb 2, 2026 to match your dummy data
+        // Set default date range for demonstration purposes
         if (endDatePicker != null)
             endDatePicker.setValue(LocalDate.of(2026, 2, 2));
         if (startDatePicker != null)
             startDatePicker.setValue(LocalDate.of(2026, 1, 1));
     }
 
+    /**
+     * Sets up event listeners for user interactions.
+     * Configures refresh button and inputs to trigger chart updates.
+     */
     private void setupEventHandlers() {
         if (refreshButton != null)
             refreshButton.setOnAction(e -> handleRefresh());
@@ -108,6 +134,10 @@ public class RevenueController implements Initializable {
             endDatePicker.setOnAction(e -> loadAllCharts());
     }
 
+    /**
+     * Retrieves sales data from the data manager.
+     * Handles any interruptions in data loading gracefully.
+     */
     private void loadSalesData() {
         try {
             this.salesList = DataManager.getSales();
@@ -117,6 +147,10 @@ public class RevenueController implements Initializable {
         }
     }
 
+    /**
+     * Orchestrates the loading of all charts on the dashboard.
+     * Ensures all visual components are updated with the latest filtered data.
+     */
     private void loadAllCharts() {
         if (salesList == null || salesList.isEmpty())
             return;
@@ -130,10 +164,14 @@ public class RevenueController implements Initializable {
         if (seasonalPieChart != null)
             loadSeasonalPieChart();
 
-        // Run this slightly later to ensure the chart is fully drawn before coloring
+        // Ensure charts are fully drawn before applying custom styles
         Platform.runLater(this::styleCharts);
     }
 
+    /**
+     * Populates the Revenue Trend line chart.
+     * Filters data based on selected date range and aggregation period.
+     */
     private void loadRevenueLineChart() {
         revenueLineChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -155,6 +193,10 @@ public class RevenueController implements Initializable {
         revenueLineChart.getData().add(series);
     }
 
+    /**
+     * Populates the Monthly Revenue bar chart.
+     * Aggregates revenue for each month of the current year.
+     */
     private void loadMonthlyBarChart() {
         monthlyBarChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -171,6 +213,10 @@ public class RevenueController implements Initializable {
         monthlyBarChart.getData().add(series);
     }
 
+    /**
+     * Populates the Cumulative Revenue area chart.
+     * Shows the progression of total revenue over the selected period.
+     */
     private void loadCumulativeAreaChart() {
         cumulativeAreaChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -186,6 +232,10 @@ public class RevenueController implements Initializable {
         cumulativeAreaChart.getData().add(series);
     }
 
+    /**
+     * Populates the Seasonal Sales pie chart.
+     * Breaks down revenue contributions by season (e.g., Summer, Holiday).
+     */
     private void loadSeasonalPieChart() {
         seasonalPieChart.getData().clear();
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -211,11 +261,15 @@ public class RevenueController implements Initializable {
         seasonalPieChart.setData(pieChartData);
     }
 
+    /**
+     * Updates the summary cards with key performance indicators.
+     * Calculates specific metrics like Total, Today's, and Weekly revenue.
+     */
     private void updateSummaryStatistics() {
         if (salesList.isEmpty())
             return;
 
-        // *** FIX: Simulate "Today" as Feb 2, 2026 to match your dummy data ***
+        // Use a fixed reference date for demonstration purposes
         LocalDate simulationDate = LocalDate.of(2026, 2, 2);
 
         double totalRevenue = 0;
@@ -261,9 +315,12 @@ public class RevenueController implements Initializable {
         }
     }
 
-    // *** THIS IS THE WHITE TEXT FIX ***
+    /**
+     * Applies custom styling to chart elements.
+     * Fixes visibility issues ensuring labels are readable on dark backgrounds.
+     */
     private void styleCharts() {
-        // Pie Chart Text
+        // Pie Chart Text - Fix for text color visibility
         for (Node node : seasonalPieChart.lookupAll(".chart-pie-label")) {
             if (node instanceof Text) {
                 node.setStyle("-fx-fill: white; -fx-font-weight: bold; -fx-font-size: 11px;");
@@ -293,6 +350,12 @@ public class RevenueController implements Initializable {
         applyAreaChartColors(cumulativeAreaChart, "#8B5CF6");
     }
 
+    /**
+     * Styles the lines of a line chart with a specific color.
+     *
+     * @param chart The LineChart to style.
+     * @param color The hex color code to apply.
+     */
     private void applyLineChartColors(LineChart<String, Number> chart, String color) {
         if (chart == null)
             return;
@@ -308,6 +371,12 @@ public class RevenueController implements Initializable {
         });
     }
 
+    /**
+     * Styles the bars of a bar chart with a specific color.
+     *
+     * @param chart The BarChart to style.
+     * @param color The hex color code to apply.
+     */
     private void applyBarChartColors(BarChart<String, Number> chart, String color) {
         if (chart == null)
             return;
@@ -319,6 +388,12 @@ public class RevenueController implements Initializable {
         });
     }
 
+    /**
+     * Styles the fill and stroke of an area chart with a specific color.
+     *
+     * @param chart The AreaChart to style.
+     * @param color The hex color code to apply.
+     */
     private void applyAreaChartColors(AreaChart<String, Number> chart, String color) {
         if (chart == null)
             return;
@@ -334,6 +409,14 @@ public class RevenueController implements Initializable {
         });
     }
 
+    /**
+     * Helper method to calculate and populate daily revenue data points.
+     *
+     * @param series The data series to populate.
+     * @param sales  The list of sales records.
+     * @param start  The start date.
+     * @param end    The end date.
+     */
     private void loadDailyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start,
             LocalDate end) {
         LocalDate current = start;
@@ -344,6 +427,14 @@ public class RevenueController implements Initializable {
         }
     }
 
+    /**
+     * Helper method to calculate and populate monthly revenue data points.
+     *
+     * @param series The data series to populate.
+     * @param sales  The list of sales records.
+     * @param start  The start date.
+     * @param end    The end date.
+     */
     private void loadMonthlyRevenue(XYChart.Series<String, Number> series, ArrayList<Sales> sales, LocalDate start,
             LocalDate end) {
         LocalDate current = start.withDayOfMonth(1);
@@ -354,6 +445,15 @@ public class RevenueController implements Initializable {
         }
     }
 
+    /**
+     * Filters the sales list to include only records within the specified date
+     * range.
+     *
+     * @param sales The original list of sales.
+     * @param start The start date of the range (inclusive).
+     * @param end   The end date of the range (inclusive).
+     * @return A new list containing only the sales within the date range.
+     */
     private ArrayList<Sales> filterSalesByDateRange(ArrayList<Sales> sales, LocalDate start, LocalDate end) {
         ArrayList<Sales> filtered = new ArrayList<>();
         if (sales == null)
@@ -367,6 +467,10 @@ public class RevenueController implements Initializable {
         return filtered;
     }
 
+    /**
+     * Handles the refresh action.
+     * Reloads data from the source and updates all charts and statistics.
+     */
     @FXML
     public void handleRefresh() {
         // DataManager handles data persistence, so just re-fetch

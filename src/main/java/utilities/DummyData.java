@@ -1,5 +1,9 @@
 package utilities;
 
+/**
+ * Provides dummy/sample data for products and sales.
+ * Used to populate the system with initial test data.
+ */
 public class DummyData {
 
         // Format: {Name, Category, Supplier, Price, Cost, Stock, ReorderLevel}
@@ -16,18 +20,15 @@ public class DummyData {
         // Format: {productId, productName, quantitySold, unitPrice, discountPercentage,
         // seasonTag, dateTime}
         static String[][] dummySales = {
-                        // Recent (Feb 9)
                         { "1", "Pencil", "80", "15.00", "0", "Regular", "2026-02-09T09:00:00" },
                         { "2", "Notebook", "2", "50.00", "0", "Regular", "2026-02-09T09:30:00" },
                         { "5", "Ballpen", "3", "20.00", "0", "Regular", "2026-02-09T10:15:00" },
                         { "4", "Bond Paper (Pack)", "1", "150.00", "0", "Regular", "2026-02-09T11:00:00" },
 
-                        // Yesterday (Feb 8)
                         { "1", "Pencil", "10", "15.00", "0", "Regular", "2026-02-08T14:00:00" },
                         { "3", "Eraser", "5", "5.00", "0", "Regular", "2026-02-08T15:30:00" },
                         { "6", "Protractor", "2", "25.00", "10", "Back to School", "2026-02-08T16:45:00" },
 
-                        // Earlier this week
                         { "2", "Notebook", "5", "50.00", "10", "Promo", "2026-02-07T10:00:00" },
                         { "5", "Ballpen", "8", "20.00", "0", "Regular", "2026-02-07T13:20:00" },
                         { "1", "Pencil", "15", "15.00", "0", "Bulk", "2026-02-06T09:45:00" },
@@ -38,10 +39,20 @@ public class DummyData {
                         { "1", "Pencil", "20", "15.00", "20", "Clearance", "2026-02-01T12:00:00" }
         };
 
+        /**
+         * Returns the dummy product data array.
+         * 
+         * @return 2D array of product data strings
+         */
         public static String[][] getDummyProduct() {
                 return dummyProduct;
         }
 
+        /**
+         * Returns the dummy sales data array.
+         * 
+         * @return 2D array of sales data strings
+         */
         public static String[][] getDummySales() {
                 return dummySales;
         }

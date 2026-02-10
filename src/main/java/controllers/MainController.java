@@ -8,6 +8,12 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
+/**
+ * Main Controller for the application layout.
+ * Manages navigation between different views (Overview, Products, Revenue,
+ * etc.)
+ * and handles the sidebar menu interactions.
+ */
 public class MainController {
 
     // FXML Components
@@ -29,14 +35,24 @@ public class MainController {
 
     private Button activeButton;
 
+    /**
+     * Initializes the controller class.
+     * Sets the default view to Profit Margin on application startup.
+     */
     @FXML
     public void initialize() {
         System.out.println("MainController initialized");
-        // Set btnPRoducts as default active view
+        // Set btnProducts as default active view
         setActiveButton(btnProducts);
         switchToProfitMargin();
     }
 
+    /**
+     * Updates the active state of sidebar buttons.
+     * Highlights the currently selected button and un-highlights the previous one.
+     *
+     * @param button The button that was clicked.
+     */
     private void setActiveButton(Button button) {
         if (activeButton != null) {
             activeButton.getStyleClass().remove("active");
@@ -45,6 +61,13 @@ public class MainController {
         activeButton = button;
     }
 
+    /**
+     * Loads a specific FXML view into the main content area.
+     * Handles path resolution for different modules (sales vs products).
+     *
+     * @param fxmlPath The filename of the FXML to load.
+     * @param button   The sidebar button associated with this view.
+     */
     private void loadView(String fxmlPath, Button button) {
         try {
             setActiveButton(button);
@@ -74,26 +97,41 @@ public class MainController {
         }
     }
 
+    /**
+     * Navigates to the Sales Overview dashboard.
+     */
     @FXML
     private void switchToOverview() {
         loadView("overview.fxml", btnOverview);
     }
 
+    /**
+     * Navigates to the Revenue Analysis dashboard.
+     */
     @FXML
     private void switchToRevenue() {
         loadView("revenue.fxml", btnRevenue);
     }
 
+    /**
+     * Navigates to the Profit Margin analysis view.
+     */
     @FXML
     private void switchToProfitMargin() {
         loadView("profitMargin.fxml", btnProfitMargin);
     }
 
+    /**
+     * Navigates to the Peak Days analytics view.
+     */
     @FXML
     private void switchToPeakDays() {
         loadView("peakDays.fxml", btnPeakDays);
     }
 
+    /**
+     * Navigates to the Product Inventory management view.
+     */
     @FXML
     private void switchToProducts() {
         loadView("products.fxml", btnProducts);

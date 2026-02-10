@@ -5,6 +5,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Products;
 
+/**
+ * Controller class for the "Add Product" dialog.
+ * Handles user input for creating new product entries.
+ */
 public class AddProductController {
 
     @FXML
@@ -25,12 +29,20 @@ public class AddProductController {
     private boolean saveClicked = false;
     private Products newProduct;
 
+    /**
+     * Handles the cancel action.
+     * Closes the dialog without saving any data.
+     */
     @FXML
     private void handleCancel() {
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Handles the save action.
+     * Validates input fields, creates a new Product object, and closes the dialog.
+     */
     @FXML
     private void handleSave() {
         if (isValid()) {
@@ -53,6 +65,12 @@ public class AddProductController {
         }
     }
 
+    /**
+     * Validates the user input fields.
+     * Checks if required fields (Name, Price, Stock) are populated.
+     *
+     * @return true if input is valid, false otherwise.
+     */
     private boolean isValid() {
         String errorMessage = "";
         if (nameField.getText() == null || nameField.getText().trim().isEmpty())
@@ -70,10 +88,20 @@ public class AddProductController {
         }
     }
 
+    /**
+     * Checks if the user clicked the save button.
+     *
+     * @return true if the product was saved, false if cancelled.
+     */
     public boolean isSaveClicked() {
         return saveClicked;
     }
 
+    /**
+     * Retrieves the newly created product.
+     *
+     * @return The new Product object, or null if not saved.
+     */
     public Products getNewProduct() {
         return newProduct;
     }
