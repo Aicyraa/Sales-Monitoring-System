@@ -82,22 +82,22 @@ public class PeakDaysController implements Initializable {
 
         bestDayChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Revenue by Day of Week");
+        series.setName("Products Sold by Day of Week");
 
-        Map<DayOfWeek, Double> revenueByDay = new HashMap<>();
+        Map<DayOfWeek, Integer> productsByDay = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
-            revenueByDay.put(day, 0.0);
+            productsByDay.put(day, 0);
         }
 
         for (Sales sale : salesList) {
             DayOfWeek day = sale.getDate().getDayOfWeek();
-            revenueByDay.put(day, revenueByDay.get(day) + sale.getTotalAmount());
+            productsByDay.put(day, productsByDay.get(day) + sale.getQuantitySold());
         }
 
         for (DayOfWeek day : DayOfWeek.values()) {
             series.getData().add(new XYChart.Data<>(
                     day.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
-                    revenueByDay.get(day)));
+                    productsByDay.get(day)));
         }
 
         bestDayChart.getData().add(series);
@@ -109,15 +109,28 @@ public class PeakDaysController implements Initializable {
 
         bestMonthChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Revenue by Month");
+        series.setName("Products Sold by Month");
 
         int currentYear = 2026;
+        Map<Month, Integer> productsByMonth = new HashMap<>();
+
         for (Month month : Month.values()) {
-            Double revenue = SaleServices.getRevenuePerMonth(salesList, month, currentYear);
-            if (revenue > 0) {
+            productsByMonth.put(month, 0);
+        }
+
+        for (Sales sale : salesList) {
+            if (sale.getDate().getYear() == currentYear) {
+                Month month = sale.getDate().getMonth();
+                productsByMonth.put(month, productsByMonth.get(month) + sale.getQuantitySold());
+            }
+        }
+
+        for (Month month : Month.values()) {
+            int count = productsByMonth.get(month);
+            if (count > 0) {
                 series.getData().add(new XYChart.Data<>(
                         month.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
-                        revenue));
+                        count));
             }
         }
 
@@ -131,21 +144,25 @@ public class PeakDaysController implements Initializable {
         bestSeasonChart.getData().clear();
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
-        Set<String> seasons = new HashSet<>();
+        Map<String, Integer> productsBySeason = new HashMap<>();
+
         for (Sales sale : salesList) {
             if (sale.getSeasonTag() != null && !sale.getSeasonTag().isEmpty()) {
-                seasons.add(sale.getSeasonTag());
+                String season = sale.getSeasonTag();
+                productsBySeason.put(season, productsBySeason.getOrDefault(season, 0) + sale.getQuantitySold());
             }
         }
 
-        double total = SaleServices.getTotalRevenue(salesList);
+        int totalProducts = productsBySeason.values().stream().mapToInt(Integer::intValue).sum();
 
-        for (String season : seasons) {
-            Double revenue = SaleServices.getRevenueBySeason(salesList, season);
-            if (revenue > 0) {
-                PieChart.Data data = new PieChart.Data(season, revenue);
+        for (Map.Entry<String, Integer> entry : productsBySeason.entrySet()) {
+            String season = entry.getKey();
+            int count = entry.getValue();
+            if (count > 0) {
+                PieChart.Data data = new PieChart.Data(season, count);
+                double percentage = totalProducts > 0 ? (count * 100.0 / totalProducts) : 0;
                 data.nameProperty().bind(javafx.beans.binding.Bindings.concat(
-                        season, " (", String.format("%.1f", (revenue / total * 100)), "%)"));
+                        season, " (", String.format("%.1f", percentage), "%)"));
                 pieChartData.add(data);
             }
         }
@@ -155,61 +172,64 @@ public class PeakDaysController implements Initializable {
 
     private void updateBestPerformers() {
         // Find best day
-        Map<DayOfWeek, Double> revenueByDay = new HashMap<>();
+        Map<DayOfWeek, Integer> productsByDay = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
-            revenueByDay.put(day, 0.0);
+            productsByDay.put(day, 0);
         }
         for (Sales sale : salesList) {
             DayOfWeek day = sale.getDate().getDayOfWeek();
-            revenueByDay.put(day, revenueByDay.get(day) + sale.getTotalAmount());
+            productsByDay.put(day, productsByDay.get(day) + sale.getQuantitySold());
         }
-        DayOfWeek bestDay = Collections.max(revenueByDay.entrySet(), Map.Entry.comparingByValue()).getKey();
-        double bestDayRevenue = revenueByDay.get(bestDay);
+        DayOfWeek bestDay = Collections.max(productsByDay.entrySet(), Map.Entry.comparingByValue()).getKey();
+        int bestDayCount = productsByDay.get(bestDay);
 
         if (bestDayLabel != null) {
             bestDayLabel.setText(bestDay.getDisplayName(TextStyle.FULL, Locale.getDefault()));
         }
         if (bestDayRevenueLabel != null) {
-            bestDayRevenueLabel.setText(String.format("₱%,.2f", bestDayRevenue));
+            bestDayRevenueLabel.setText(String.format("%,d products", bestDayCount));
         }
 
         // Find best month
         int currentYear = 2026;
-        Map<Month, Double> revenueByMonth = new HashMap<>();
+        Map<Month, Integer> productsByMonth = new HashMap<>();
         for (Month month : Month.values()) {
-            revenueByMonth.put(month, SaleServices.getRevenuePerMonth(salesList, month, currentYear));
+            productsByMonth.put(month, 0);
         }
-        Month bestMonth = Collections.max(revenueByMonth.entrySet(), Map.Entry.comparingByValue()).getKey();
-        double bestMonthRevenue = revenueByMonth.get(bestMonth);
+        for (Sales sale : salesList) {
+            if (sale.getDate().getYear() == currentYear) {
+                Month month = sale.getDate().getMonth();
+                productsByMonth.put(month, productsByMonth.get(month) + sale.getQuantitySold());
+            }
+        }
+        Month bestMonth = Collections.max(productsByMonth.entrySet(), Map.Entry.comparingByValue()).getKey();
+        int bestMonthCount = productsByMonth.get(bestMonth);
 
         if (bestMonthLabel != null) {
             bestMonthLabel.setText(bestMonth.getDisplayName(TextStyle.FULL, Locale.getDefault()));
         }
         if (bestMonthRevenueLabel != null) {
-            bestMonthRevenueLabel.setText(String.format("₱%,.2f", bestMonthRevenue));
+            bestMonthRevenueLabel.setText(String.format("%,d products", bestMonthCount));
         }
 
         // Find best season
-        Map<String, Double> revenueBySeason = new HashMap<>();
-        Set<String> seasons = new HashSet<>();
+        Map<String, Integer> productsBySeason = new HashMap<>();
         for (Sales sale : salesList) {
             if (sale.getSeasonTag() != null && !sale.getSeasonTag().isEmpty()) {
-                seasons.add(sale.getSeasonTag());
+                String season = sale.getSeasonTag();
+                productsBySeason.put(season, productsBySeason.getOrDefault(season, 0) + sale.getQuantitySold());
             }
         }
-        for (String season : seasons) {
-            revenueBySeason.put(season, SaleServices.getRevenueBySeason(salesList, season));
-        }
 
-        if (!revenueBySeason.isEmpty()) {
-            String bestSeason = Collections.max(revenueBySeason.entrySet(), Map.Entry.comparingByValue()).getKey();
-            double bestSeasonRevenue = revenueBySeason.get(bestSeason);
+        if (!productsBySeason.isEmpty()) {
+            String bestSeason = Collections.max(productsBySeason.entrySet(), Map.Entry.comparingByValue()).getKey();
+            int bestSeasonCount = productsBySeason.get(bestSeason);
 
             if (bestSeasonLabel != null) {
                 bestSeasonLabel.setText(bestSeason);
             }
             if (bestSeasonRevenueLabel != null) {
-                bestSeasonRevenueLabel.setText(String.format("₱%,.2f", bestSeasonRevenue));
+                bestSeasonRevenueLabel.setText(String.format("%,d products", bestSeasonCount));
             }
         }
     }

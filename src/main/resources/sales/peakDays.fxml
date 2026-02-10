@@ -79,7 +79,7 @@
                   <!-- Charts Row 1: Best Day and Best Month -->
                   <HBox spacing="20" alignment="TOP_CENTER">
                      <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                        <Label text="Revenue by Day of Week" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Label text="Products Sold by Day of Week" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                         <BarChart fx:id="bestDayChart" legendVisible="false" animated="true" prefHeight="300" barGap="5" categoryGap="15" style="-fx-background-color: transparent;">
                            <xAxis><CategoryAxis fx:id="dayChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
                            <yAxis><NumberAxis fx:id="dayChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
@@ -87,7 +87,7 @@
                      </VBox>
 
                      <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                        <Label text="Revenue by Month" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Label text="Products Sold by Month" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                         <BarChart fx:id="bestMonthChart" legendVisible="false" animated="true" prefHeight="300" barGap="5" categoryGap="15" style="-fx-background-color: transparent;">
                            <xAxis><CategoryAxis fx:id="monthChartXAxis" side="BOTTOM" tickLabelFill="#94A3B8"/></xAxis>
                            <yAxis><NumberAxis fx:id="monthChartYAxis" side="LEFT" tickLabelFill="#94A3B8"/></yAxis>
@@ -98,7 +98,7 @@
                   <!-- Charts Row 2: Best Season -->
                   <HBox spacing="20" alignment="TOP_CENTER">
                      <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-                        <Label text="Revenue by Season" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Label text="Products Sold by Season" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
                         <PieChart fx:id="bestSeasonChart" legendVisible="true" legendSide="BOTTOM" animated="true" prefHeight="350" labelLineLength="10" style="-fx-background-color: transparent;"/>
                      </VBox>
                   </HBox>
