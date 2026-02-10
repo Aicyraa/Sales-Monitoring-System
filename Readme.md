@@ -6,3 +6,6 @@
 
 ## Setting Up
 * Visit JavaFx website at <i>https://openjfx.io/openjfx-docs/</i> follow the steps (depends on IDE)
+
+### How to run?
+* Select the file "Runner" then click run
