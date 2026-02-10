@@ -1,42 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: #0B1215;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SaleServices">
-   <children>
-      <VBox layoutX="2.0" prefHeight="237.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
-               <children>
-                  <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Profit Margin" textAlignment="JUSTIFY">
-                     <font>
-                        <Font name="JetBrains Mono Bold" size="41.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="22.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-               </padding>
-            </HBox>
-             <!-- Placeholder content -->
-            <VBox alignment="CENTER" prefHeight="714.0" prefWidth="1120.0" VBox.vgrow="ALWAYS">
-               <children>
-                   <Label text="Profit Margin Content Here" textFill="WHITE">
-                       <font>
-                           <Font name="JetBrains Mono Regular" size="20.0" />
-                       </font>
-                   </Label>
-               </children>
-            </VBox>
-         </children>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.ProfitMarginController"
+            style="-fx-background-color: #1e2936;">
+
+   <top>
+      <VBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 20;">
+         <Label text="Profit Margin Analysis" textFill="white">
+            <font>
+               <Font name="System Bold" size="24"/>
+            </font>
+         </Label>
+         <Label text="View profit margins and profitability metrics for your products"
+                textFill="#ecf0f1">
+            <font>
+               <Font size="14"/>
+            </font>
+         </Label>
       </VBox>
-   </children>
-</AnchorPane>
+   </top>
+
+   <center>
+      <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #1e2936;">
+
+         <!-- Summary Cards -->
+         <HBox spacing="20" alignment="CENTER">
+            <VBox spacing="5" style="-fx-background-color: #3498db; -fx-padding: 20;
+                                         -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label text="Total Revenue" textFill="white">
+                  <font><Font size="14"/></font>
+               </Label>
+               <Label fx:id="totalRevenueLabel" text="₱0.00" textFill="white">
+                  <font><Font name="System Bold" size="24"/></font>
+               </Label>
+            </VBox>
+
+            <VBox spacing="5" style="-fx-background-color: #2ecc71; -fx-padding: 20;
+                                         -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label text="Total Profit" textFill="white">
+                  <font><Font size="14"/></font>
+               </Label>
+               <Label fx:id="totalProfitLabel" text="₱0.00" textFill="white">
+                  <font><Font name="System Bold" size="24"/></font>
+               </Label>
+            </VBox>
+
+            <VBox spacing="5" style="-fx-background-color: #e74c3c; -fx-padding: 20;
+                                         -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label text="Average Margin" textFill="white">
+                  <font><Font size="14"/></font>
+               </Label>
+               <Label fx:id="avgMarginLabel" text="0%" textFill="white">
+                  <font><Font name="System Bold" size="24"/></font>
+               </Label>
+            </VBox>
+         </HBox>
+
+         <!-- Filter Section -->
+         <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 15;
+                                                               -fx-background-color: #2c3e50;
+                                                               -fx-background-radius: 5;">
+            <Label text="Filter by Category:" textFill="#ecf0f1">
+               <font><Font name="System Bold" size="14"/></font>
+            </Label>
+            <ComboBox fx:id="categoryFilter" promptText="All Categories"
+                      prefWidth="200" onAction="#filterByCategory"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label text="Sort by:" textFill="#ecf0f1">
+               <font><Font name="System Bold" size="14"/></font>
+            </Label>
+            <ComboBox fx:id="sortByCombo" promptText="Profit Margin"
+                      prefWidth="200" onAction="#sortTable"/>
+
+            <Button text="Refresh" onAction="#refreshData"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white;
+                               -fx-padding: 8 20; -fx-background-radius: 5;">
+               <font><Font name="System Bold" size="12"/></font>
+            </Button>
+         </HBox>
+
+         <!-- Table with Inline Dark Styling -->
+         <TableView fx:id="profitTable" VBox.vgrow="ALWAYS"
+                    style="-fx-background-color: #2c3e50;
+                              -fx-control-inner-background: #34495e;
+                              -fx-control-inner-background-alt: #2c3e50;
+                              -fx-table-cell-border-color: #1e2936;
+                              -fx-text-fill: white;">
+            <columns>
+               <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+               <TableColumn fx:id="nameColumn" text="Product Name" prefWidth="150"/>
+               <TableColumn fx:id="categoryColumn" text="Category" prefWidth="120"/>
+               <TableColumn fx:id="costColumn" text="Cost Price" prefWidth="100"/>
+               <TableColumn fx:id="priceColumn" text="Selling Price" prefWidth="100"/>
+               <TableColumn fx:id="unitProfitColumn" text="Unit Profit" prefWidth="100"/>
+               <TableColumn fx:id="marginColumn" text="Profit Margin %" prefWidth="120"/>
+               <TableColumn fx:id="quantitySoldColumn" text="Qty Sold" prefWidth="90"/>
+               <TableColumn fx:id="totalRevenueColumn" text="Total Revenue" prefWidth="120"/>
+               <TableColumn fx:id="totalProfitColumn" text="Total Profit" prefWidth="120"/>
+            </columns>
+            <columnResizePolicy>
+               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+         </TableView>
+
+      </VBox>
+   </center>
+
+</BorderPane>
