@@ -113,9 +113,9 @@ public class ProductServices implements Initializable {
         if (totalProductsLabel != null)
             totalProductsLabel.setText(String.valueOf(totalProducts));
         if (totalValueLabel != null)
-            totalValueLabel.setText(String.format("₱%.2f", totalInventoryValue));
+            totalValueLabel.setText(String.format("₱%,.2f", totalInventoryValue));
         if (totalStockLabel != null)
-            totalStockLabel.setText(String.valueOf(totalStock));
+            totalStockLabel.setText(String.format("%,d", totalStock));
     }
 
     /**
@@ -201,12 +201,12 @@ public class ProductServices implements Initializable {
                         categoryLabel.setText(product.getCategory() + " | " + product.getSupplier());
 
                     if (priceLabel != null) {
-                        priceLabel.setText(String.format("₱%.2f", product.getPrice()));
+                        priceLabel.setText(String.format("₱%,.2f", product.getPrice()));
                         priceLabel.setStyle("-fx-text-fill: #fbbf24;"); // Gold
                     }
 
                     if (stockLabel != null) {
-                        stockLabel.setText(String.valueOf(product.getCurrentStock()));
+                        stockLabel.setText(String.format("%,d", product.getCurrentStock()));
                     }
 
                     if (statusLabel != null) {

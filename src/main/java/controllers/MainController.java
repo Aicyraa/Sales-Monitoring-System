@@ -44,7 +44,7 @@ public class MainController {
         System.out.println("MainController initialized");
         // Set btnProducts as default active view
         setActiveButton(btnProducts);
-        switchToProfitMargin();
+        switchToProducts();
     }
 
     /**
