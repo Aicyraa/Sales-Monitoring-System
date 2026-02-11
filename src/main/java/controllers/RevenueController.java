@@ -14,20 +14,32 @@ import java.util.stream.Collectors;
 
 public class RevenueController {
 
-    @FXML private ComboBox<String> periodCombo;
-    @FXML private DatePicker fromDatePicker;
-    @FXML private DatePicker toDatePicker;
-    @FXML private Button refreshButton;
+    @FXML
+    private ComboBox<String> periodCombo;
+    @FXML
+    private DatePicker fromDatePicker;
+    @FXML
+    private DatePicker toDatePicker;
+    @FXML
+    private Button refreshButton;
 
-    @FXML private Label totalRevenueLabel;
-    @FXML private Label weekRevenueLabel;
-    @FXML private Label todayRevenueLabel;
-    @FXML private Label avgDailyLabel;
+    @FXML
+    private Label totalRevenueLabel;
+    @FXML
+    private Label weekRevenueLabel;
+    @FXML
+    private Label todayRevenueLabel;
+    @FXML
+    private Label avgDailyLabel;
 
-    @FXML private LineChart<String, Number> revenueTrendChart;
-    @FXML private BarChart<String, Number> monthlyComparisonChart;
-    @FXML private LineChart<String, Number> cumulativeGrowthChart;
-    @FXML private PieChart seasonalDistributionChart;
+    @FXML
+    private LineChart<String, Number> revenueTrendChart;
+    @FXML
+    private BarChart<String, Number> monthlyComparisonChart;
+    @FXML
+    private LineChart<String, Number> cumulativeGrowthChart;
+    @FXML
+    private PieChart seasonalDistributionChart;
 
     private ArrayList<Sales> allSales;
     private LocalDate startDate;
@@ -92,6 +104,36 @@ public class RevenueController {
         updateMonthlyComparisonChart(filteredSales);
         updateCumulativeGrowthChart(filteredSales);
         updateSeasonalDistribution(filteredSales);
+
+        // Apply styling after data is loaded
+        javafx.application.Platform.runLater(this::styleCharts);
+    }
+
+    private void styleCharts() {
+        // Pie Chart Text - Adjusts text color for better visibility
+        for (javafx.scene.Node node : seasonalDistributionChart.lookupAll(".chart-pie-label")) {
+            if (node instanceof javafx.scene.text.Text) {
+                node.setStyle("-fx-fill: white; -fx-font-weight: bold; -fx-font-size: 11px;");
+            }
+        }
+        // Connecting Lines
+        for (javafx.scene.Node node : seasonalDistributionChart.lookupAll(".chart-pie-label-line")) {
+            node.setStyle("-fx-stroke: #ffffff;");
+        }
+
+        // Legends and Axes
+        Chart[] charts = { revenueTrendChart, monthlyComparisonChart, cumulativeGrowthChart,
+                seasonalDistributionChart };
+        for (Chart chart : charts) {
+            if (chart == null)
+                continue;
+            for (javafx.scene.Node node : chart.lookupAll(".chart-legend-item"))
+                node.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+            for (javafx.scene.Node node : chart.lookupAll(".axis-label"))
+                node.setStyle("-fx-text-fill: #cbd5e1;");
+            for (javafx.scene.Node node : chart.lookupAll(".axis-tick-label"))
+                node.setStyle("-fx-text-fill: #94a3b8;");
+        }
     }
 
     private void updateSummaryCards(List<Sales> sales) {
@@ -99,7 +141,7 @@ public class RevenueController {
         double totalRevenue = sales.stream()
                 .mapToDouble(Sales::getRevenue)
                 .sum();
-        totalRevenueLabel.setText(String.format("₱%.2f", totalRevenue));
+        totalRevenueLabel.setText(String.format("₱%,.2f", totalRevenue));
 
         // Calculate this week revenue
         LocalDate weekStart = LocalDate.now().minusDays(7);
@@ -107,7 +149,7 @@ public class RevenueController {
                 .filter(s -> !s.getDate().isBefore(weekStart))
                 .mapToDouble(Sales::getRevenue)
                 .sum();
-        weekRevenueLabel.setText(String.format("₱%.2f", weekRevenue));
+        weekRevenueLabel.setText(String.format("₱%,.2f", weekRevenue));
 
         // Calculate today revenue
         LocalDate today = LocalDate.now();
@@ -115,12 +157,12 @@ public class RevenueController {
                 .filter(s -> s.getDate().equals(today))
                 .mapToDouble(Sales::getRevenue)
                 .sum();
-        todayRevenueLabel.setText(String.format("₱%.2f", todayRevenue));
+        todayRevenueLabel.setText(String.format("₱%,.2f", todayRevenue));
 
         // Calculate average daily revenue
         long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate) + 1;
         double avgDaily = daysBetween > 0 ? totalRevenue / daysBetween : 0;
-        avgDailyLabel.setText(String.format("₱%.2f", avgDaily));
+        avgDailyLabel.setText(String.format("₱%,.2f", avgDaily));
     }
 
     private void updateRevenueTrendChart(List<Sales> sales) {
@@ -217,8 +259,7 @@ public class RevenueController {
             double percentage = (entry.getValue() / total) * 100;
             PieChart.Data data = new PieChart.Data(
                     String.format("%s (%.1f%%)", entry.getKey(), percentage),
-                    entry.getValue()
-            );
+                    entry.getValue());
             seasonalDistributionChart.getData().add(data);
         }
     }

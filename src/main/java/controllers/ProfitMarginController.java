@@ -24,6 +24,8 @@ public class ProfitMarginController {
     @FXML
     private Label totalProfitLabel;
     @FXML
+    private Label totalCostLabel;
+    @FXML
     private Label avgMarginLabel;
 
     @FXML
@@ -262,8 +264,13 @@ public class ProfitMarginController {
                 .average()
                 .orElse(0.0);
 
-        totalProfitLabel.setText(String.format("₱%.2f", totalProfit));
-        avgMarginLabel.setText(String.format("%.2f%%", avgMargin));
+        double totalCost = profitItems.stream()
+                .mapToDouble(item -> item.getCost() * item.getQuantitySold())
+                .sum();
+
+        totalProfitLabel.setText(String.format("₱%,.2f", totalProfit));
+        totalCostLabel.setText(String.format("₱%,.2f", totalCost));
+        avgMarginLabel.setText(String.format("%,.2f%%", avgMargin));
     }
 
     /**
@@ -347,7 +354,7 @@ public class ProfitMarginController {
             if (empty || item == null) {
                 setText(null);
             } else {
-                setText(String.format("₱%.2f", item));
+                setText(String.format("₱%,.2f", item));
             }
         }
     }
@@ -364,7 +371,7 @@ public class ProfitMarginController {
             if (empty || item == null) {
                 setText(null);
             } else {
-                setText(String.format("%.2f%%", item));
+                setText(String.format("%,.2f%%", item));
 
                 if (item >= 40) {
                     setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");

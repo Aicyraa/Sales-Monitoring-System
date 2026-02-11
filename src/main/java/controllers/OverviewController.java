@@ -149,7 +149,7 @@ public class OverviewController implements Initializable {
             double discountAmount = gross * (discount / 100);
             double net = gross - discountAmount;
 
-            totalAmountLabel.setText(String.format("Total: ₱%.2f", net));
+            totalAmountLabel.setText(String.format("Total: ₱%,.2f", net));
 
         } catch (NumberFormatException e) {
             totalAmountLabel.setText("Total: ₱0.00");
@@ -285,7 +285,7 @@ public class OverviewController implements Initializable {
             VBox numbers = new VBox(5);
             numbers.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
 
-            Label total = new Label(String.format("₱%.2f", sale.getTotalAmount()));
+            Label total = new Label(String.format("₱%,.2f", sale.getTotalAmount()));
             total.setStyle("-fx-text-fill: #4ADE80; -fx-font-weight: bold; -fx-font-size: 15;");
 
             Label qty = new Label(sale.getQuantitySold() + " pcs");

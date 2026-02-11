@@ -42,6 +42,15 @@
             </VBox>
 
             <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label text="Total Cost" style="-fx-text-fill: #94A3B8;">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="totalCostLabel" text="₱0.00" style="-fx-text-fill: #FBBF24;">
+                  <font><Font name="JetBrains Mono Bold" size="24"/></font>
+               </Label>
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <Label text="Average Margin" style="-fx-text-fill: #94A3B8;">
                   <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
                </Label>
