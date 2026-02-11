@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" style="-fx-background-color: #1E293B; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <!-- Icon Placeholder -->
+      <StackPane>
+         <children>
+            <Circle fill="#3b82f6" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Label text="P" textFill="WHITE">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </StackPane>
+
+      <!-- Name & Category -->
+      <VBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="2.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="nameLabel" text="Product Name" textFill="#f1f5f9">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="categoryLabel" text="Category | Supplier" textFill="#94a3b8">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="11.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+
+      <!-- Stats Grid / HBox -->
+      <HBox alignment="CENTER_RIGHT" spacing="20.0" HBox.hgrow="SOMETIMES">
+         <children>
+            <VBox alignment="CENTER" minWidth="60.0" spacing="2.0">
+               <children>
+                  <Label text="Price" textFill="#64748b">
+                     <font><Font name="JetBrains Mono Regular" size="10.0" /></font>
+                  </Label>
+                  <Label fx:id="priceLabel" text="₱0.00" textFill="#fbbf24">
+                     <font><Font name="JetBrains Mono Bold" size="13.0" /></font>
+                  </Label>
+               </children>
+            </VBox>
+
+            <VBox alignment="CENTER" minWidth="60.0" spacing="2.0">
+               <children>
+                  <Label text="Stock" textFill="#64748b">
+                     <font><Font name="JetBrains Mono Regular" size="10.0" /></font>
+                  </Label>
+                  <Label fx:id="stockLabel" text="0" textFill="#4ade80">
+                     <font><Font name="JetBrains Mono Bold" size="13.0" /></font>
+                  </Label>
+                  <Label fx:id="statusLabel" text="Healthy" textFill="#22c55e">
+                     <font><Font name="JetBrains Mono Regular" size="10.0" /></font>
+                  </Label>
+               </children>
+            </VBox>
+
+            <VBox alignment="CENTER" minWidth="60.0" spacing="2.0">
+               <children>
+                  <Label text="Sold" textFill="#64748b">
+                     <font><Font name="JetBrains Mono Regular" size="10.0" /></font>
+                  </Label>
+                  <Label fx:id="soldLabel" text="0" textFill="#94a3b8">
+                     <font><Font name="JetBrains Mono Bold" size="13.0" /></font>
+                  </Label>
+               </children>
+            </VBox>
+
+            <VBox alignment="CENTER" minWidth="60.0" spacing="2.0">
+               <children>
+                  <Label text="Margin" textFill="#64748b">
+                     <font><Font name="JetBrains Mono Regular" size="10.0" /></font>
+                  </Label>
+                  <Label fx:id="marginLabel" text="0%" textFill="#f472b6">
+                     <font><Font name="JetBrains Mono Bold" size="13.0" /></font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+   </padding>
+</HBox>

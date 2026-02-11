@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: #0B1215;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RevenueController">
+
+   <VBox AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+      <!-- Header Section (Full Width, No Outer Padding) -->
+      <HBox alignment="CENTER_LEFT" prefHeight="86.0" spacing="5.0" style="-fx-background-color: #0B1215;">
+         <children>
+            <Label prefHeight="56.0" prefWidth="400.0" style="-fx-text-fill: #ffffff;" text="Revenue" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="41.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="22.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+         </padding>
+      </HBox>
+
+      <!-- Main Content (With Padding) -->
+      <VBox spacing="15" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </padding>
+
+         <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #1E293B; -fx-padding: 15; -fx-background-radius: 8;">
+            <Label style="-fx-text-fill: #94A3B8;" text="Period:">
+               <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+            </Label>
+            <ComboBox fx:id="periodCombo" prefWidth="120" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-mark-color: white;" />
+            <Label style="-fx-text-fill: #94A3B8;" text="From:">
+               <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+            </Label>
+            <DatePicker fx:id="fromDatePicker" prefWidth="140" style="-fx-background-color: #334155; -fx-text-fill: white;" />
+            <Label style="-fx-text-fill: #94A3B8;" text="To:">
+               <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+            </Label>
+            <DatePicker fx:id="toDatePicker" prefWidth="140" style="-fx-background-color: #334155;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="refreshButton" onAction="#handleRefresh" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;" text="Refresh">
+               <font><Font name="JetBrains Mono Bold" size="14.0" /></font>
+            </Button>
+         </HBox>
+
+         <HBox alignment="CENTER" spacing="20">
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label style="-fx-text-fill: #94A3B8;" text="Total Revenue">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="totalRevenueLabel" style="-fx-text-fill: #4ADE80;" text="₱0.00"> <font> <Font name="JetBrains Mono Bold" size="24" /> </font> </Label>
+            </VBox>
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label style="-fx-text-fill: #94A3B8;" text="This Week">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="weekRevenueLabel" style="-fx-text-fill: #3B82F6;" text="₱0.00"> <font> <Font name="JetBrains Mono Bold" size="24" /> </font> </Label>
+            </VBox>
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label style="-fx-text-fill: #94A3B8;" text="Today">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="todayRevenueLabel" style="-fx-text-fill: #FBBF24;" text="₱0.00"> <font> <Font name="JetBrains Mono Bold" size="24" /> </font> </Label>
+            </VBox>
+            <VBox alignment="CENTER" spacing="8" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <Label style="-fx-text-fill: #94A3B8;" text="Avg Daily">
+                  <font><Font name="JetBrains Mono Regular" size="14.0" /></font>
+               </Label>
+               <Label fx:id="avgDailyLabel" style="-fx-text-fill: #8B5CF6;" text="₱0.00"> <font> <Font name="JetBrains Mono Bold" size="24" /> </font> </Label>
+            </VBox>
+         </HBox>
+      </VBox>
+
+      <ScrollPane fitToWidth="true" style="-fx-background: #0B1215; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+         <VBox spacing="20" style="-fx-background-color: #0B1215;">
+            <HBox alignment="TOP_CENTER" spacing="20">
+               <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;" text="Revenue Trend" />
+                  <LineChart fx:id="revenueTrendChart" animated="true" legendVisible="false" prefHeight="300" style="-fx-background-color: transparent;">
+                     <xAxis><CategoryAxis side="BOTTOM" tickLabelFill="#94A3B8" /></xAxis>
+                     <yAxis><NumberAxis side="LEFT" tickLabelFill="#94A3B8" /></yAxis>
+                  </LineChart>
+               </VBox>
+               <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;" text="Monthly Comparison" />
+                  <BarChart fx:id="monthlyComparisonChart" animated="true" barGap="5" categoryGap="15" legendVisible="false" prefHeight="300" style="-fx-background-color: transparent;">
+                     <xAxis><CategoryAxis side="BOTTOM" tickLabelFill="#94A3B8" /></xAxis>
+                     <yAxis><NumberAxis side="LEFT" tickLabelFill="#94A3B8" /></yAxis>
+                  </BarChart>
+               </VBox>
+            </HBox>
+
+            <HBox alignment="TOP_CENTER" spacing="20">
+               <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;" text="Cumulative Growth" />
+                  <LineChart fx:id="cumulativeGrowthChart" animated="true" legendVisible="false" prefHeight="300" style="-fx-background-color: transparent;">
+                     <xAxis><CategoryAxis side="BOTTOM" tickLabelFill="#94A3B8" /></xAxis>
+                     <yAxis><NumberAxis side="LEFT" tickLabelFill="#94A3B8" /></yAxis>
+                  </LineChart>
+               </VBox>
+               <VBox spacing="10" style="-fx-background-color: #1E293B; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;" text="Seasonal Distribution" />
+                  <PieChart fx:id="seasonalDistributionChart" animated="true" labelLineLength="10" legendSide="BOTTOM" legendVisible="true" prefHeight="300" style="-fx-background-color: transparent;" />
+               </VBox>
+            </HBox>
+         </VBox>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="5.0" />
+         </padding>
+      </ScrollPane>
+   </VBox>
+</AnchorPane>

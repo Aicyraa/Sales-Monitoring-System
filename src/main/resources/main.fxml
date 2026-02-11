@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane styleClass="root" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox prefWidth="280" spacing="4" styleClass="sidebar">
+            <padding>
+                <Insets bottom="20" left="0" right="0" top="20" />
+            </padding>
+
+            <!-- App Header -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="sidebar-header">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="0" />
+                </padding>
+            <ImageView fitHeight="43.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/market-shop-shopping-ecommerce-cart-buy-online-svgrepo-com.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D minX="10.0" minY="10.0" />
+               </viewport>
+            </ImageView>
+                <Label prefHeight="46.0" prefWidth="210.0" styleClass="app-title" text="Sales Monitoring System" textAlignment="CENTER" textFill="#dfe2e8" wrapText="true">
+               <font>
+                  <Font name="JetBrains Mono Bold" size="13.5" />
+               </font></Label>
+            </HBox>
+
+            <!-- Products Section -->
+            <VBox spacing="2">
+                <Label styleClass="sidebar-section-label" text="PRODUCTS" textFill="#d6d9e4">
+                    <padding>
+                        <Insets bottom="8" left="20" right="20" top="24" />
+                    </padding>
+               <font>
+                  <Font name="JetBrains Mono Bold" size="11.0" />
+               </font>
+                </Label>
+
+                <!-- All Products Button -->
+                <Button fx:id="btnProducts" alignment="BOTTOM_LEFT" onAction="#switchToProducts" prefHeight="28.0" prefWidth="280.0" styleClass="sidebar-btn" text="All Products" textFill="#e6e7e8">
+                    <graphic>
+                        <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/market-purchase-svgrepo-com.png" />
+                            </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font name="JetBrains Mono Regular" size="14.0" />
+               </font>
+                </Button>
+
+
+            </VBox>
+
+            <!-- Sales Section -->
+            <VBox spacing="2">
+                <Label graphicTextGap="5.0" styleClass="sidebar-section-label" text="SALES ANALYTICS" textFill="#d6d9e4">
+                    <padding>
+                        <Insets bottom="8" left="20" right="20" top="16" />
+                    </padding>
+               <font>
+                  <Font name="JetBrains Mono Bold" size="11.0" />
+               </font>
+                </Label>
+
+                <!-- Overview Button -->
+                <Button fx:id="btnOverview" alignment="BOTTOM_LEFT" depthTest="DISABLE" onAction="#switchToOverview" prefHeight="28.0" prefWidth="280.0" styleClass="sidebar-btn" text="Overview" textFill="#e6e7e8">
+                    <graphic>
+                        <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/document-text-svgrepo-com.png" />
+                            </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font name="JetBrains Mono Regular" size="14.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+                </Button>
+
+                <!-- Revenue Button -->
+                <Button fx:id="btnRevenue" alignment="BOTTOM_LEFT" onAction="#switchToRevenue" prefHeight="28.0" prefWidth="282.0" styleClass="sidebar-btn" text="Revenue" textFill="#e6e7e8">
+                    <graphic>
+                        <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/bitcoin-stacked-money-svgrepo-com.png" />
+                            </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font name="JetBrains Mono Regular" size="14.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+                </Button>
+
+                <!-- Profit Margin Button -->
+                <Button fx:id="btnProfitMargin" alignment="BOTTOM_LEFT" onAction="#switchToProfitMargin" prefHeight="28.0" prefWidth="283.0" styleClass="sidebar-btn" text="Profit Margin" textFill="#e6e7e8">
+                    <graphic>
+                        <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/market-research-svgrepo-com.png" />
+                            </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font name="JetBrains Mono Regular" size="14.0" />
+               </font>
+                </Button>
+
+                <!-- Peak Days Button -->
+                <Button fx:id="btnPeakDays" alignment="BOTTOM_LEFT" onAction="#switchToPeakDays" prefHeight="28.0" prefWidth="283.0" styleClass="sidebar-btn" text="Peak Days" textFill="#e6e7e8">
+                    <graphic>
+                        <ImageView cache="true" cacheHint="QUALITY" fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/calendar-check-svgrepo-com.png" />
+                            </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font name="JetBrains Mono Regular" size="14.0" />
+               </font>
+                </Button>
+            </VBox>
+
+            <!-- Spacer -->
+            <Region VBox.vgrow="ALWAYS" />
+
+            <!-- Footer -->
+            <VBox styleClass="sidebar-footer">
+                <padding>
+                    <Insets bottom="0" left="20" right="20" top="20" />
+                </padding>
+                <Label styleClass="footer-text" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area" />
+    </center>
+</BorderPane>
